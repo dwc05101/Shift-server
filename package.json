@@ -1,0 +1,42 @@
+{
+  "name": "shift-server",
+  "version": "1.0.0",
+  "description": "Server for time management system Shift",
+  "main": "index.js",
+  "repository": "https://github.com/dwc05101/Shift-server.git",
+  "author": "Gwangjo Gong",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "class-validator": "^0.9.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "gql-merge": "^0.0.6",
+    "graphql-to-typescript": "^0.1.2",
+    "graphql-tools": "^4.0.5",
+    "graphql-yoga": "^1.18.1",
+    "helmet": "^3.20.0",
+    "jsonwebtoken": "^8.5.1",
+    "merge-graphql-schemas": "^1.6.2-bdaf070.0",
+    "morgan": "^1.9.1",
+    "pg": "^7.12.0",
+    "typeorm": "^0.2.18"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/cors": "^2.8.5",
+    "@types/helmet": "^0.0.43",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/morgan": "^1.7.36",
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.3.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.3"
+  },
+  "scripts": {
+    "predev": "yarn run types",
+    "dev": "cd src && nodemon --exec ts-node index.ts -e ts,graphql",
+    "pretypes": "gql-merge --out-file ./src/schema.graphql ./src/api/**/*.graphql",
+    "types": "graphql-to-typescript ./src/schema.graphql ./src/types/graph.d.ts"
+  }
+}

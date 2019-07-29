@@ -1,0 +1,14 @@
+type User {
+  id: Int!
+  isAdmin: Boolean!
+  personalCode: Int!
+  password: String!
+  firstName: String!
+  lastName: String!
+  phoneNumber: String!
+  profilePhoto: String
+  organization: Organization
+  slots: [Slot]
+  createdAt: String!
+  updatedAt: String
+}

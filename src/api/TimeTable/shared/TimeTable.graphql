@@ -1,0 +1,8 @@
+type TimeTable {
+  id: Int!
+  yearMonth: String!
+  organization: Organization
+  weeks: [Week]
+  createdAt: String!
+  updatedAt: String
+}

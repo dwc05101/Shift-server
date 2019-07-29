@@ -1,0 +1,8 @@
+type Day {
+  id: Int!
+  dayNumber: Int!
+  week: Week!
+  slots: [Slot]
+  createdAt: String!
+  updatedAt: String
+}

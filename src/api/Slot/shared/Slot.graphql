@@ -1,0 +1,10 @@
+type Slot {
+  id: Int!
+  startTime: String!
+  endTime: String!
+  needs: Int!
+  users: [User]
+  day: Day!
+  createdAt: String!
+  updatedAt: String
+}

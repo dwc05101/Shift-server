@@ -1,0 +1,8 @@
+type Organization {
+  id: Int!
+  name: String!
+  users: [User]
+  timetables: [TimeTable]
+  createdAt: String!
+  updatedAt: String
+}

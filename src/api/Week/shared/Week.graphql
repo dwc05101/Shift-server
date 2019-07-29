@@ -1,0 +1,8 @@
+type Week {
+  id: Int!
+  weekNumber: Int!
+  timetable: TimeTable!
+  days: [Day]
+  createdAt: String!
+  updatedAt: String
+}

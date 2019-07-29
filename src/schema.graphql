@@ -1,0 +1,61 @@
+type Day {
+  id: Int!
+  dayNumber: Int!
+  week: Week!
+  slots: [Slot]
+  createdAt: String!
+  updatedAt: String
+}
+
+type Organization {
+  id: Int!
+  name: String!
+  users: [User]
+  timetables: [TimeTable]
+  createdAt: String!
+  updatedAt: String
+}
+
+type Slot {
+  id: Int!
+  startTime: String!
+  endTime: String!
+  needs: Int!
+  users: [User]
+  day: Day!
+  createdAt: String!
+  updatedAt: String
+}
+
+type TimeTable {
+  id: Int!
+  yearMonth: String!
+  organization: Organization
+  weeks: [Week]
+  createdAt: String!
+  updatedAt: String
+}
+
+type User {
+  id: Int!
+  isAdmin: Boolean!
+  personalCode: Int!
+  password: String!
+  firstName: String!
+  lastName: String!
+  phoneNumber: String!
+  profilePhoto: String
+  organization: Organization
+  slots: [Slot]
+  createdAt: String!
+  updatedAt: String
+}
+
+type Week {
+  id: Int!
+  weekNumber: Int!
+  timetable: TimeTable!
+  days: [Day]
+  createdAt: String!
+  updatedAt: String
+}
