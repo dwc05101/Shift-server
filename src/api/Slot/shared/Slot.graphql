@@ -4,6 +4,7 @@ type Slot {
   endTime: String!
   needs: Int!
   users: [User]
+  dayId: Int
   day: Day!
   createdAt: String!
   updatedAt: String

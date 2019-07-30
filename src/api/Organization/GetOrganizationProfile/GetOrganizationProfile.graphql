@@ -1,0 +1,9 @@
+type GetOrganizationProfileResponse {
+  ok: Boolean!
+  error: String
+  organization: Organization
+}
+
+type Query {
+  GetOrganizationProfile(orgId: Int!): GetOrganizationProfileResponse!
+}

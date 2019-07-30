@@ -19,6 +19,9 @@ class TimeTable extends BaseEntity {
   @Column({ type: "text" })
   yearMonth: string
 
+  @Column({ nullable: true })
+  organizationId: number
+
   @ManyToOne(type => Organization, organization => organization.timetables)
   organization: Organization
 

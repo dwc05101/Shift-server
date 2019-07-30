@@ -1,0 +1,11 @@
+type CreateTimeTableResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  CreateTimeTable(
+    yearMonth: String!
+    organizationId: Int!
+  ): CreateTimeTableResponse!
+}

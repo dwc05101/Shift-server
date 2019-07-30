@@ -1,0 +1,8 @@
+type CreateDayResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  CreateDay(dayNumber: Int!, weekId: Int!): CreateDayResponse!
+}

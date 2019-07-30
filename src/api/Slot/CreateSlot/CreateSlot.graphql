@@ -1,0 +1,13 @@
+type CreateSlotResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  CreateSlot(
+    startTime: String!
+    endTime: String!
+    needs: Int!
+    dayId: Int!
+  ): CreateSlotResponse!
+}

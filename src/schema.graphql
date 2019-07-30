@@ -1,19 +1,76 @@
+type CreateDayResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  CreateDay(dayNumber: Int!, weekId: Int!): CreateDayResponse!
+  SendInvitation(invitingOrganizationId: Int!, invitedUserId: Int!): SendInvitationResponse
+  CreateOrganization(name: String!): CreateOrganizationResponse!
+  CreateSlot(startTime: String!, endTime: String!, needs: Int!, dayId: Int!): CreateSlotResponse!
+  CreateTimeTable(yearMonth: String!, organizationId: Int!): CreateTimeTableResponse!
+  EmailSignIn(email: String!, password: String!): EmailSignInResponse!
+  EmailSignUp(firstName: String!, lastName: String!, email: String!, password: String!, profilePhoto: String!, phoneNumber: String!): EmailSignUpResponse!
+  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!
+  CreateWeek(weekNumber: Int!, timetableId: Int!): CreateWeekResponse!
+}
+
 type Day {
   id: Int!
   dayNumber: Int!
+  weekId: Int!
   week: Week!
   slots: [Slot]
   createdAt: String!
   updatedAt: String
 }
 
+type SendInvitationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Invitation {
+  id: Int!
+  invitingOrganizationId: Int
+  invitingOrganization: Organization!
+  invitedUserId: Int
+  invitedUser: User!
+  accepted: Boolean!
+  createdAt: String!
+  updatedAt: String
+}
+
+type CreateOrganizationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type GetOrganizationProfileResponse {
+  ok: Boolean!
+  error: String
+  organization: Organization
+}
+
+type Query {
+  GetOrganizationProfile(orgId: Int!): GetOrganizationProfileResponse!
+  GetMyProfile: GetMyProfileResponse!
+}
+
 type Organization {
   id: Int!
   name: String!
+  admin: User!
   users: [User]
   timetables: [TimeTable]
+  invitations: [Invitation]
   createdAt: String!
   updatedAt: String
+}
+
+type CreateSlotResponse {
+  ok: Boolean!
+  error: String
 }
 
 type Slot {
@@ -22,38 +79,77 @@ type Slot {
   endTime: String!
   needs: Int!
   users: [User]
+  dayId: Int
   day: Day!
   createdAt: String!
   updatedAt: String
 }
 
+type CreateTimeTableResponse {
+  ok: Boolean!
+  error: String
+}
+
 type TimeTable {
   id: Int!
   yearMonth: String!
-  organization: Organization
+  organizationId: Int
+  organization: Organization!
   weeks: [Week]
   createdAt: String!
   updatedAt: String
 }
 
+type EmailSignInResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type EmailSignUpResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type FacebookConnectResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type GetMyProfileResponse {
+  ok: Boolean!
+  error: String
+  user: User
+}
+
 type User {
   id: Int!
-  isAdmin: Boolean!
-  personalCode: Int!
-  password: String!
+  email: String
+  password: String
   firstName: String!
   lastName: String!
   phoneNumber: String!
   profilePhoto: String
-  organization: Organization
+  fbId: String
+  organizationsAsAdmin: [Organization]
+  organizationsAsUser: [Organization]
+  invitations: [Invitation]
   slots: [Slot]
   createdAt: String!
   updatedAt: String
 }
 
+type CreateWeekResponse {
+  ok: Boolean!
+  error: String
+}
+
 type Week {
   id: Int!
   weekNumber: Int!
+  timetableId: Int
   timetable: TimeTable!
   days: [Day]
   createdAt: String!

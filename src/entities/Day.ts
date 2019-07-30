@@ -19,6 +19,9 @@ class Day extends BaseEntity {
   @Column({ type: "int" })
   dayNumber: number
 
+  @Column({ nullable: true })
+  weekId: number
+
   @ManyToOne(type => Week, week => week.days)
   week: Week
 

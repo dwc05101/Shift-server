@@ -1,0 +1,11 @@
+type SendInvitationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  SendInvitation(
+    invitingOrganizationId: Int!
+    invitedUserId: Int!
+  ): SendInvitationResponse
+}

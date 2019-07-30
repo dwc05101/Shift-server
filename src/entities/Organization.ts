@@ -3,10 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm"
+import Invitation from "./Invitation"
 import TimeTable from "./TimeTable"
 import User from "./User"
 
@@ -18,11 +21,18 @@ class Organization extends BaseEntity {
   @Column({ type: "text" })
   name: string
 
-  @OneToMany(type => User, user => user.organization)
+  @OneToMany(type => User, user => user.organizationsAsAdmin)
+  admin: User
+
+  @ManyToMany(type => User, user => user.organizationsAsUser)
+  @JoinTable()
   users: User[]
 
   @OneToMany(type => TimeTable, timetable => timetable.organization)
   timetables: TimeTable[]
+
+  @OneToMany(type => Invitation, invitation => invitation.invitingOrganization)
+  invitations: Invitation[]
 
   @CreateDateColumn() createdAt: string
 

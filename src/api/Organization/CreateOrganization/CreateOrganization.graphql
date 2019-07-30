@@ -1,0 +1,8 @@
+type CreateOrganizationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  CreateOrganization(name: String!): CreateOrganizationResponse!
+}

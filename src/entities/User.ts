@@ -7,10 +7,11 @@ import {
   CreateDateColumn,
   Entity,
   ManyToMany,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm"
+import Invitation from "./Invitation"
 import Organization from "./Organization"
 import Slot from "./Slot"
 
@@ -18,16 +19,16 @@ const BCRYPT_ROUNDS = 10
 
 @Entity()
 class User extends BaseEntity {
+  get fullName(): string {
+    return `${this.lastName}${this.firstName}`
+  }
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({ type: "boolean" })
-  isAdmin: boolean
+  @Column({ type: "text", nullable: true })
+  email: string | null
 
-  @Column({ type: "int", unique: true })
-  personalCode: number
-
-  @Column({ type: "text" })
+  @Column({ type: "text", nullable: true })
   password: string
 
   @Column({ type: "text" })
@@ -36,11 +37,26 @@ class User extends BaseEntity {
   @Column({ type: "text" })
   lastName: string
 
+  @Column({ type: "text", nullable: true })
+  profilePhoto: string
+
   @Column({ type: "text" })
   phoneNumber: string
 
-  @ManyToOne(type => Organization, organization => organization.users)
-  organization: Organization
+  @Column({ type: "text", nullable: true })
+  fbId: string
+
+  @Column({ nullable: true })
+  organizationId: number
+
+  @OneToMany(type => Organization, organization => organization.admin)
+  organizationsAsAdmin: Organization[]
+
+  @ManyToMany(type => Organization, organization => organization.users)
+  organizationsAsUser: Organization[]
+
+  @OneToMany(type => Invitation, invitation => invitation.invitedUser)
+  invitations: Invitation[]
 
   @ManyToMany(types => Slot, slot => slot.users)
   slots: Slot[]
@@ -58,12 +74,12 @@ class User extends BaseEntity {
     }
   }
 
-  private hashPassword(password: string): Promise<string> {
-    return bcrypt.hash(password, BCRYPT_ROUNDS)
+  public comparePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password)
   }
 
-  get fullName(): string {
-    return `${this.firstName} ${this.lastName}`
+  private hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, BCRYPT_ROUNDS)
   }
 }
 

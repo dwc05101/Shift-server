@@ -1,13 +1,15 @@
 type User {
   id: Int!
-  isAdmin: Boolean!
-  personalCode: Int!
-  password: String!
+  email: String
+  password: String
   firstName: String!
   lastName: String!
   phoneNumber: String!
   profilePhoto: String
-  organization: Organization
+  fbId: String
+  organizationsAsAdmin: [Organization]
+  organizationsAsUser: [Organization]
+  invitations: [Invitation]
   slots: [Slot]
   createdAt: String!
   updatedAt: String

@@ -1,0 +1,10 @@
+type Invitation {
+  id: Int!
+  invitingOrganizationId: Int
+  invitingOrganization: Organization!
+  invitedUserId: Int
+  invitedUser: User!
+  accepted: Boolean!
+  createdAt: String!
+  updatedAt: String
+}

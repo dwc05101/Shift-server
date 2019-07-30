@@ -19,6 +19,9 @@ class Week extends BaseEntity {
   @Column({ type: "int" })
   weekNumber: number
 
+  @Column({ nullable: true })
+  timetableId: number
+
   @ManyToOne(type => TimeTable, timetable => timetable.weeks)
   timetable: TimeTable
 
