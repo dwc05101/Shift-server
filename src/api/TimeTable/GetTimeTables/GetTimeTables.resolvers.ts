@@ -1,39 +1,42 @@
 import Organization from "../../../entities/Organization"
 import {
-  GetOrganizationProfileQueryArgs,
-  GetOrganizationProfileResponse
+  GetTimeTablesQueryArgs,
+  GetTimeTablesResponse
 } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
 import authResolver from "../../../utils/authMiddleware"
 
 const resolvers: Resolvers = {
   Query: {
-    GetOrganizationProfile: authResolver(
+    GetTimeTables: authResolver(
       async (
         _,
-        args: GetOrganizationProfileQueryArgs,
+        args: GetTimeTablesQueryArgs,
         { req }
-      ): Promise<GetOrganizationProfileResponse> => {
+      ): Promise<GetTimeTablesResponse> => {
         try {
-          const organization = await Organization.findOne({ id: args.orgId })
+          const organization = await Organization.findOne(
+            { id: args.organizationId },
+            { relations: ["timetables"] }
+          )
           if (organization) {
             return {
               ok: true,
               error: null,
-              organization
+              timetables: organization.timetables
             }
           } else {
             return {
               ok: false,
-              error: "Organization Not found",
-              organization: null
+              error: "Organization not found",
+              timetables: null
             }
           }
         } catch (err) {
           return {
             ok: false,
             error: err.message,
-            organization: null
+            timetables: null
           }
         }
       }

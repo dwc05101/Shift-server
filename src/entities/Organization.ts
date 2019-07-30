@@ -25,10 +25,14 @@ class Organization extends BaseEntity {
   @Column({ nullable: true })
   adminId: number
 
-  @ManyToOne(type => User, user => user.organizationsAsAdmin)
+  @ManyToOne(type => User, user => user.organizationsAsAdmin, {
+    onDelete: "CASCADE"
+  })
   admin: User
 
-  @ManyToMany(type => User, user => user.organizationsAsUser)
+  @ManyToMany(type => User, user => user.organizationsAsUser, {
+    onDelete: "CASCADE"
+  })
   @JoinTable()
   users: User[]
 

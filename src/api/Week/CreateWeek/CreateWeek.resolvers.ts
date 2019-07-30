@@ -15,7 +15,6 @@ const resolvers: Resolvers = {
         args: CreateWeekMutationArgs,
         { req }
       ): Promise<CreateWeekResponse> => {
-        // const user:User = req.user
         const { weekNumber, timetableId } = args
         try {
           const timetable = await TimeTable.findOne({ id: timetableId })

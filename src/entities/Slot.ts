@@ -27,13 +27,13 @@ class Slot extends BaseEntity {
   @Column({ nullable: true })
   userId: number
 
-  @ManyToOne(type => User, user => user.slots)
+  @ManyToOne(type => User, user => user.slots, { onDelete: "CASCADE" })
   user: User
 
   @Column({ nullable: true })
   dayId: number
 
-  @ManyToOne(type => Day, day => day.slots)
+  @ManyToOne(type => Day, day => day.slots, { onDelete: "CASCADE" })
   day: Day
 
   @CreateDateColumn() createdAt: string

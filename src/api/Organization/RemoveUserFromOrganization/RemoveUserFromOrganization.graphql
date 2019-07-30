@@ -1,0 +1,11 @@
+type RemoveUserFromOrganizationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  RemoveUserFromOrganization(
+    organizationId: Int!
+    userId: Int!
+  ): RemoveUserFromOrganizationResponse!
+}

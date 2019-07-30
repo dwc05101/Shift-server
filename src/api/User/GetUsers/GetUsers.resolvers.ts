@@ -1,53 +1,49 @@
 import Organization from "../../../entities/Organization"
-import TimeTable from "../../../entities/TimeTable"
 import User from "../../../entities/User"
-import {
-  CreateTimeTableMutationArgs,
-  CreateTimeTableResponse
-} from "../../../types/graph"
+import { GetUsersQueryArgs, GetUsersResponse } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
 import authResolver from "../../../utils/authMiddleware"
 
 const resolvers: Resolvers = {
-  Mutation: {
-    CreateTimeTable: authResolver(
+  Query: {
+    GetUsers: authResolver(
       async (
         _,
-        args: CreateTimeTableMutationArgs,
+        args: GetUsersQueryArgs,
         { req }
-      ): Promise<CreateTimeTableResponse> => {
+      ): Promise<GetUsersResponse> => {
         const user: User = req.user
-        const { yearMonth, organizationId } = args
         try {
           const organization = await Organization.findOne(
-            {
-              id: organizationId
-            },
-            { relations: ["admin"] }
+            { id: args.organizationId },
+            { relations: ["users"] }
           )
           if (organization) {
-            if (organization.admin.id === user.id) {
-              await TimeTable.create({ yearMonth, organization }).save()
+            if (organization.adminId === user.id) {
               return {
                 ok: true,
-                error: null
+                error: null,
+                users: organization.users
               }
             } else {
               return {
                 ok: false,
-                error: "Only admin can make a timetable"
+                error: "Only admin can get users",
+                users: null
               }
             }
           } else {
             return {
               ok: false,
-              error: "Organization not found"
+              error: "Organization not found",
+              users: null
             }
           }
         } catch (err) {
           return {
             ok: false,
-            error: err.message
+            error: err.message,
+            users: null
           }
         }
       }

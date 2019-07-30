@@ -1,0 +1,9 @@
+type GetSlotsResponse {
+  ok: Boolean!
+  error: String
+  slots: [Slot]
+}
+
+type Query {
+  GetSlots(dayId: Int!): GetSlotsResponse!
+}

@@ -18,13 +18,15 @@ class Invitation extends BaseEntity {
   @Column({ nullable: true })
   invitingOrganizationId: number
 
-  @ManyToOne(type => Organization, organization => organization.invitations)
+  @ManyToOne(type => Organization, organization => organization.invitations, {
+    onDelete: "CASCADE"
+  })
   invitingOrganization: Organization
 
   @Column({ nullable: true })
   invitedUserId: number
 
-  @ManyToOne(type => User, user => user.invitations)
+  @ManyToOne(type => User, user => user.invitations, { onDelete: "CASCADE" })
   invitedUser: User
 
   @Column({ type: "boolean", default: false })
