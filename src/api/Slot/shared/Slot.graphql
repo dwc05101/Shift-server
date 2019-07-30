@@ -2,8 +2,8 @@ type Slot {
   id: Int!
   startTime: String!
   endTime: String!
-  needs: Int!
-  users: [User]
+  userId: Int
+  user: User!
   dayId: Int
   day: Day!
   createdAt: String!

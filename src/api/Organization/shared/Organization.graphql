@@ -1,6 +1,7 @@
 type Organization {
   id: Int!
   name: String!
+  adminId: Int
   admin: User!
   users: [User]
   timetables: [TimeTable]

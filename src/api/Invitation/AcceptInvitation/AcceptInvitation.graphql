@@ -1,0 +1,8 @@
+type AcceptInvitationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  AcceptInvitation(invitationId: Int!): AcceptInvitationResponse!
+}

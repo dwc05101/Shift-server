@@ -5,9 +5,10 @@ type CreateDayResponse {
 
 type Mutation {
   CreateDay(dayNumber: Int!, weekId: Int!): CreateDayResponse!
-  SendInvitation(invitingOrganizationId: Int!, invitedUserId: Int!): SendInvitationResponse
+  AcceptInvitation(invitationId: Int!): AcceptInvitationResponse!
+  SendInvitation(invitingOrganizationId: Int!, invitedUserId: Int!): SendInvitationResponse!
   CreateOrganization(name: String!): CreateOrganizationResponse!
-  CreateSlot(startTime: String!, endTime: String!, needs: Int!, dayId: Int!): CreateSlotResponse!
+  CreateSlot(startTime: String!, endTime: String!, dayId: Int!): CreateSlotResponse!
   CreateTimeTable(yearMonth: String!, organizationId: Int!): CreateTimeTableResponse!
   EmailSignIn(email: String!, password: String!): EmailSignInResponse!
   EmailSignUp(firstName: String!, lastName: String!, email: String!, password: String!, profilePhoto: String!, phoneNumber: String!): EmailSignUpResponse!
@@ -23,6 +24,11 @@ type Day {
   slots: [Slot]
   createdAt: String!
   updatedAt: String
+}
+
+type AcceptInvitationResponse {
+  ok: Boolean!
+  error: String
 }
 
 type SendInvitationResponse {
@@ -60,6 +66,7 @@ type Query {
 type Organization {
   id: Int!
   name: String!
+  adminId: Int
   admin: User!
   users: [User]
   timetables: [TimeTable]
@@ -77,8 +84,8 @@ type Slot {
   id: Int!
   startTime: String!
   endTime: String!
-  needs: Int!
-  users: [User]
+  userId: Int
+  user: User!
   dayId: Int
   day: Day!
   createdAt: String!

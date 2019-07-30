@@ -1,5 +1,4 @@
 import TimeTable from "../../../entities/TimeTable"
-import User from "../../../entities/User"
 import Week from "../../../entities/Week"
 import {
   CreateWeekMutationArgs,

@@ -1,28 +1,30 @@
 import Day from "../../../entities/Day"
 import Slot from "../../../entities/Slot"
+import User from "../../../entities/User"
 import {
   CreateSlotMutationArgs,
   CreateSlotResponse
 } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
-import managerResolver from "../../../utils/managerMiddleware"
+import authResolver from "../../../utils/authMiddleware"
 
 const resolvers: Resolvers = {
   Mutation: {
-    CreateSlot: managerResolver(
+    CreateSlot: authResolver(
       async (
         _,
         args: CreateSlotMutationArgs,
         { req }
       ): Promise<CreateSlotResponse> => {
-        const { startTime, endTime, needs, dayId } = args
+        const user: User = req.user
+        const { startTime, endTime, dayId } = args
         try {
           const day = await Day.findOne({ id: dayId }, { relations: ["slots"] })
           if (day) {
             await Slot.create({
               startTime,
               endTime,
-              needs,
+              user,
               day
             }).save()
             return {
@@ -38,7 +40,7 @@ const resolvers: Resolvers = {
         } catch (err) {
           return {
             ok: false,
-            error: err.messasge
+            error: err.message
           }
         }
       }

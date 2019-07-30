@@ -1,4 +1,4 @@
-export const typeDefs = ["type CreateDayResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Mutation {\n  CreateDay(dayNumber: Int!, weekId: Int!): CreateDayResponse!\n  SendInvitation(invitingOrganizationId: Int!, invitedUserId: Int!): SendInvitationResponse\n  CreateOrganization(name: String!): CreateOrganizationResponse!\n  CreateSlot(startTime: String!, endTime: String!, needs: Int!, dayId: Int!): CreateSlotResponse!\n  CreateTimeTable(yearMonth: String!, organizationId: Int!): CreateTimeTableResponse!\n  EmailSignIn(email: String!, password: String!): EmailSignInResponse!\n  EmailSignUp(firstName: String!, lastName: String!, email: String!, password: String!, profilePhoto: String!, phoneNumber: String!): EmailSignUpResponse!\n  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!\n  CreateWeek(weekNumber: Int!, timetableId: Int!): CreateWeekResponse!\n}\n\ntype Day {\n  id: Int!\n  dayNumber: Int!\n  weekId: Int!\n  week: Week!\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype SendInvitationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Invitation {\n  id: Int!\n  invitingOrganizationId: Int\n  invitingOrganization: Organization!\n  invitedUserId: Int\n  invitedUser: User!\n  accepted: Boolean!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetOrganizationProfileResponse {\n  ok: Boolean!\n  error: String\n  organization: Organization\n}\n\ntype Query {\n  GetOrganizationProfile(orgId: Int!): GetOrganizationProfileResponse!\n  GetMyProfile: GetMyProfileResponse!\n}\n\ntype Organization {\n  id: Int!\n  name: String!\n  admin: User!\n  users: [User]\n  timetables: [TimeTable]\n  invitations: [Invitation]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateSlotResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Slot {\n  id: Int!\n  startTime: String!\n  endTime: String!\n  needs: Int!\n  users: [User]\n  dayId: Int\n  day: Day!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateTimeTableResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype TimeTable {\n  id: Int!\n  yearMonth: String!\n  organizationId: Int\n  organization: Organization!\n  weeks: [Week]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype EmailSignInResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype EmailSignUpResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype FacebookConnectResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype GetMyProfileResponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype User {\n  id: Int!\n  email: String\n  password: String\n  firstName: String!\n  lastName: String!\n  phoneNumber: String!\n  profilePhoto: String\n  fbId: String\n  organizationsAsAdmin: [Organization]\n  organizationsAsUser: [Organization]\n  invitations: [Invitation]\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateWeekResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Week {\n  id: Int!\n  weekNumber: Int!\n  timetableId: Int\n  timetable: TimeTable!\n  days: [Day]\n  createdAt: String!\n  updatedAt: String\n}\n"];
+export const typeDefs = ["type CreateDayResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Mutation {\n  CreateDay(dayNumber: Int!, weekId: Int!): CreateDayResponse!\n  AcceptInvitation(invitationId: Int!): AcceptInvitationResponse!\n  SendInvitation(invitingOrganizationId: Int!, invitedUserId: Int!): SendInvitationResponse!\n  CreateOrganization(name: String!): CreateOrganizationResponse!\n  CreateSlot(startTime: String!, endTime: String!, dayId: Int!): CreateSlotResponse!\n  CreateTimeTable(yearMonth: String!, organizationId: Int!): CreateTimeTableResponse!\n  EmailSignIn(email: String!, password: String!): EmailSignInResponse!\n  EmailSignUp(firstName: String!, lastName: String!, email: String!, password: String!, profilePhoto: String!, phoneNumber: String!): EmailSignUpResponse!\n  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!\n  CreateWeek(weekNumber: Int!, timetableId: Int!): CreateWeekResponse!\n}\n\ntype Day {\n  id: Int!\n  dayNumber: Int!\n  weekId: Int!\n  week: Week!\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype AcceptInvitationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype SendInvitationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Invitation {\n  id: Int!\n  invitingOrganizationId: Int\n  invitingOrganization: Organization!\n  invitedUserId: Int\n  invitedUser: User!\n  accepted: Boolean!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetOrganizationProfileResponse {\n  ok: Boolean!\n  error: String\n  organization: Organization\n}\n\ntype Query {\n  GetOrganizationProfile(orgId: Int!): GetOrganizationProfileResponse!\n  GetMyProfile: GetMyProfileResponse!\n}\n\ntype Organization {\n  id: Int!\n  name: String!\n  adminId: Int\n  admin: User!\n  users: [User]\n  timetables: [TimeTable]\n  invitations: [Invitation]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateSlotResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Slot {\n  id: Int!\n  startTime: String!\n  endTime: String!\n  userId: Int\n  user: User!\n  dayId: Int\n  day: Day!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateTimeTableResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype TimeTable {\n  id: Int!\n  yearMonth: String!\n  organizationId: Int\n  organization: Organization!\n  weeks: [Week]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype EmailSignInResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype EmailSignUpResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype FacebookConnectResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype GetMyProfileResponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype User {\n  id: Int!\n  email: String\n  password: String\n  firstName: String!\n  lastName: String!\n  phoneNumber: String!\n  profilePhoto: String\n  fbId: String\n  organizationsAsAdmin: [Organization]\n  organizationsAsUser: [Organization]\n  invitations: [Invitation]\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateWeekResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Week {\n  id: Int!\n  weekNumber: Int!\n  timetableId: Int\n  timetable: TimeTable!\n  days: [Day]\n  createdAt: String!\n  updatedAt: String\n}\n"];
 /* tslint:disable */
 
 export interface Query {
@@ -19,6 +19,7 @@ export interface GetOrganizationProfileResponse {
 export interface Organization {
   id: number;
   name: string;
+  adminId: number | null;
   admin: User;
   users: Array<User> | null;
   timetables: Array<TimeTable> | null;
@@ -59,8 +60,8 @@ export interface Slot {
   id: number;
   startTime: string;
   endTime: string;
-  needs: number;
-  users: Array<User> | null;
+  userId: number | null;
+  user: User;
   dayId: number | null;
   day: Day;
   createdAt: string;
@@ -105,7 +106,8 @@ export interface GetMyProfileResponse {
 
 export interface Mutation {
   CreateDay: CreateDayResponse;
-  SendInvitation: SendInvitationResponse | null;
+  AcceptInvitation: AcceptInvitationResponse;
+  SendInvitation: SendInvitationResponse;
   CreateOrganization: CreateOrganizationResponse;
   CreateSlot: CreateSlotResponse;
   CreateTimeTable: CreateTimeTableResponse;
@@ -120,6 +122,10 @@ export interface CreateDayMutationArgs {
   weekId: number;
 }
 
+export interface AcceptInvitationMutationArgs {
+  invitationId: number;
+}
+
 export interface SendInvitationMutationArgs {
   invitingOrganizationId: number;
   invitedUserId: number;
@@ -132,7 +138,6 @@ export interface CreateOrganizationMutationArgs {
 export interface CreateSlotMutationArgs {
   startTime: string;
   endTime: string;
-  needs: number;
   dayId: number;
 }
 
@@ -168,6 +173,11 @@ export interface CreateWeekMutationArgs {
 }
 
 export interface CreateDayResponse {
+  ok: boolean;
+  error: string | null;
+}
+
+export interface AcceptInvitationResponse {
   ok: boolean;
   error: string | null;
 }

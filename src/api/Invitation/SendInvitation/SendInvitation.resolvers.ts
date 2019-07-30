@@ -29,7 +29,7 @@ const resolvers: Resolvers = {
                 invitingOrganization,
                 invitedUser,
                 accepted: false
-              })
+              }).save()
               return {
                 ok: true,
                 error: null

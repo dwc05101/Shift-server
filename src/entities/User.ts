@@ -46,9 +46,6 @@ class User extends BaseEntity {
   @Column({ type: "text", nullable: true })
   fbId: string
 
-  @Column({ nullable: true })
-  organizationId: number
-
   @OneToMany(type => Organization, organization => organization.admin)
   organizationsAsAdmin: Organization[]
 
@@ -58,7 +55,7 @@ class User extends BaseEntity {
   @OneToMany(type => Invitation, invitation => invitation.invitedUser)
   invitations: Invitation[]
 
-  @ManyToMany(types => Slot, slot => slot.users)
+  @OneToMany(types => Slot, slot => slot.user)
   slots: Slot[]
 
   @CreateDateColumn() createdAt: string

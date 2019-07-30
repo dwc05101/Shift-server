@@ -7,5 +7,5 @@ type Mutation {
   SendInvitation(
     invitingOrganizationId: Int!
     invitedUserId: Int!
-  ): SendInvitationResponse
+  ): SendInvitationResponse!
 }

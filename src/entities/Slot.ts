@@ -3,8 +3,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -26,9 +24,11 @@ class Slot extends BaseEntity {
   @Column({ type: "int" })
   needs: number
 
-  @ManyToMany(type => User, user => user.slots)
-  @JoinTable()
-  users: User[]
+  @Column({ nullable: true })
+  userId: number
+
+  @ManyToOne(type => User, user => user.slots)
+  user: User
 
   @Column({ nullable: true })
   dayId: number

@@ -5,6 +5,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -21,7 +22,10 @@ class Organization extends BaseEntity {
   @Column({ type: "text" })
   name: string
 
-  @OneToMany(type => User, user => user.organizationsAsAdmin)
+  @Column({ nullable: true })
+  adminId: number
+
+  @ManyToOne(type => User, user => user.organizationsAsAdmin)
   admin: User
 
   @ManyToMany(type => User, user => user.organizationsAsUser)
