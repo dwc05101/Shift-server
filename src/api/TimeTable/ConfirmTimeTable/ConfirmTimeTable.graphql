@@ -1,0 +1,8 @@
+type ConfirmTimeTableResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  ConfirmTimeTable(timetableId: Int!): ConfirmTimeTableResponse!
+}

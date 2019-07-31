@@ -1,0 +1,12 @@
+type GetCurrentTimeTableResponse {
+  ok: Boolean!
+  error: String
+  timetable: TimeTable
+}
+
+type Query {
+  GetCurrentTimeTable(
+    yearMonthWeek: String!
+    organizationId: Int!
+  ): GetCurrentTimeTableResponse!
+}

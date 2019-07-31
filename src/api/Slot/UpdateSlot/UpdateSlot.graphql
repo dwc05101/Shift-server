@@ -1,0 +1,14 @@
+type UpdateSlotResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  UpdateSlot(
+    slotId: Int!
+    startTime: String
+    endTime: String
+    userId: Int
+    day: Int
+  ): UpdateSlotResponse!
+}

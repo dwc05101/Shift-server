@@ -17,7 +17,10 @@ const resolvers: Resolvers = {
           loginId: args.loginId
         })
         if (organization) {
-          if (organization.comparePassword(args.password)) {
+          const isLoginSuccess = await organization.comparePassword(
+            args.password
+          )
+          if (isLoginSuccess) {
             return {
               ok: true,
               error: null,

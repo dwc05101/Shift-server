@@ -1,5 +1,5 @@
-import Day from "../../../entities/Day"
 import Slot from "../../../entities/Slot"
+import TimeTable from "../../../entities/TimeTable"
 import User from "../../../entities/User"
 import {
   CreateSlotMutationArgs,
@@ -14,35 +14,53 @@ const resolvers: Resolvers = {
       args: CreateSlotMutationArgs,
       { req }
     ): Promise<CreateSlotResponse> => {
-      const { startTime, endTime, dayId, personalCode, organizationId } = args
+      const {
+        startTime,
+        endTime,
+        day,
+        personalCode,
+        organizationId,
+        timetableId
+      } = args
       try {
-        const day = await Day.findOne({ id: dayId }, { relations: ["slots"] })
-        if (day) {
-          const user = await User.findOne({
-            organizationId,
-            personalCode
-          })
-          if (user) {
-            await Slot.create({
-              startTime,
-              endTime,
-              day,
-              user
-            }).save()
-            return {
-              ok: true,
-              error: null
+        const timetable = await TimeTable.findOne(
+          { id: timetableId },
+          { relations: ["slots"] }
+        )
+        if (timetable) {
+          if (!timetable.isConfirmed) {
+            const user = await User.findOne({
+              organizationId,
+              personalCode
+            })
+            if (user) {
+              await Slot.create({
+                startTime,
+                endTime,
+                timetable,
+                day,
+                user
+              }).save()
+              return {
+                ok: true,
+                error: null
+              }
+            } else {
+              return {
+                ok: false,
+                error: "user not found"
+              }
             }
           } else {
             return {
               ok: false,
-              error: "user not found"
+              error: "Cannot create a slot on confirmed timetable"
             }
           }
         } else {
           return {
             ok: false,
-            error: "Day not found"
+            error: "Timetable not found"
           }
         }
       } catch (err) {

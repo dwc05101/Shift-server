@@ -5,5 +5,5 @@ type GetOrganizationProfileResponse {
 }
 
 type Query {
-  GetOrganizationProfile(orgId: Int!): GetOrganizationProfileResponse!
+  GetOrganizationProfile: GetOrganizationProfileResponse!
 }

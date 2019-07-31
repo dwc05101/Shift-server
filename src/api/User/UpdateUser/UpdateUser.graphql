@@ -1,0 +1,13 @@
+type UpdateUserResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  UpdateUser(
+    userId: Int!
+    personalCode: String
+    name: String
+    phoneNumber: String
+  ): UpdateUserResponse!
+}

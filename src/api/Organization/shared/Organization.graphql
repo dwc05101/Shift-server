@@ -3,6 +3,7 @@ type Organization {
   name: String!
   loginId: String!
   password: String!
+  profilePhoto: String!
   users: [User]
   timetables: [TimeTable]
   createdAt: String!

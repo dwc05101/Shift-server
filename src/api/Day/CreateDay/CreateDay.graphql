@@ -1,8 +1,0 @@
-type CreateDayResponse {
-  ok: Boolean!
-  error: String
-}
-
-type Mutation {
-  CreateDay(dayNumber: Int!, timetableId: Int!): CreateDayResponse!
-}

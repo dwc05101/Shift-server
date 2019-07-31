@@ -28,7 +28,9 @@ class User extends BaseEntity {
   @Column({ nullable: true })
   organizationId: number
 
-  @ManyToOne(type => Organization, organization => organization.users)
+  @ManyToOne(type => Organization, organization => organization.users, {
+    onDelete: "CASCADE"
+  })
   organization: Organization
 
   @OneToMany(types => Slot, slot => slot.user)

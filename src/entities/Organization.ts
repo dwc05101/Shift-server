@@ -29,9 +29,10 @@ class Organization extends BaseEntity {
   @Column({ type: "text" })
   password: string
 
-  @OneToMany(type => User, user => user.organization, {
-    onDelete: "CASCADE"
-  })
+  @Column({ type: "text" })
+  profilePhoto: string
+
+  @OneToMany(type => User, user => user.organization)
   users: User[]
 
   @OneToMany(type => TimeTable, timetable => timetable.organization)

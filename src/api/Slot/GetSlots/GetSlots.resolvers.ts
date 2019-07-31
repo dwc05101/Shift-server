@@ -1,4 +1,4 @@
-import Day from "../../../entities/Day"
+import TimeTable from "../../../entities/TimeTable"
 import { GetSlotsQueryArgs, GetSlotsResponse } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
 import authResolver from "../../../utils/authMiddleware"
@@ -12,20 +12,20 @@ const resolvers: Resolvers = {
         { req }
       ): Promise<GetSlotsResponse> => {
         try {
-          const day = await Day.findOne(
-            { id: args.dayId },
+          const timetable = await TimeTable.findOne(
+            { id: args.timetableId },
             { relations: ["slots"] }
           )
-          if (day) {
+          if (timetable) {
             return {
               ok: true,
               error: null,
-              slots: day.slots
+              slots: timetable.slots
             }
           } else {
             return {
               ok: false,
-              error: "Day not found",
+              error: "TimeTable not found",
               slots: null
             }
           }

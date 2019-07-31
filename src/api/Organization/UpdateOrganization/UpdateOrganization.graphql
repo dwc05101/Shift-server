@@ -1,0 +1,11 @@
+type UpdateOrganizationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  UpdateOrganization(
+    name: String
+    password: String
+  ): UpdateOrganizationResponse!
+}

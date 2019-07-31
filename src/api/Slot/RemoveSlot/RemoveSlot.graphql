@@ -1,0 +1,8 @@
+type RemoveSlotResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  RemoveSlot(slotId: Int!): RemoveSlotResponse!
+}

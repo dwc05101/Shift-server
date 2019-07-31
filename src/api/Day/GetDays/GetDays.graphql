@@ -1,9 +1,0 @@
-type GetDaysResponse {
-  ok: Boolean!
-  error: String
-  days: [Day]
-}
-
-type Query {
-  GetDays(timetableId: Int!): GetDaysResponse!
-}

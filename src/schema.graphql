@@ -1,45 +1,22 @@
-type CreateDayResponse {
-  ok: Boolean!
-  error: String
-}
-
-type Mutation {
-  CreateDay(dayNumber: Int!, timetableId: Int!): CreateDayResponse!
-  CreateOrganization(name: String!, loginId: String!, password: String!): CreateOrganizationResponse!
-  OrganizationSignIn(loginId: String!, password: String!): OrganizationSignInResponse!
-  CreateSlot(startTime: String!, endTime: String!, dayId: Int!, personalCode: String!, organizationId: Int!): CreateSlotResponse!
-  CreateTimeTable(yearMonthWeek: String!): CreateTimeTableResponse!
-  CreateUserToOrganization(personalCode: String!, name: String!, phoneNumber: String!): CreateUserToOrganizationResponse!
-  RemoveUserFromOrganization(userId: Int!): RemoveUserFromOrganizationResponse!
-}
-
-type GetDaysResponse {
-  ok: Boolean!
-  error: String
-  days: [Day]
-}
-
-type Query {
-  GetDays(timetableId: Int!): GetDaysResponse!
-  GetOrganizationProfile(orgId: Int!): GetOrganizationProfileResponse!
-  GetSlots(dayId: Int!): GetSlotsResponse!
-  GetTimeTables: GetTimeTablesResponse!
-  GetUsers: GetUsersResponse!
-}
-
-type Day {
-  id: Int!
-  dayNumber: Int!
-  timetableId: Int
-  timetable: TimeTable!
-  slots: [Slot]
-  createdAt: String!
-  updatedAt: String
-}
-
 type CreateOrganizationResponse {
   ok: Boolean!
   error: String
+  token: String
+}
+
+type Mutation {
+  CreateOrganization(name: String!, loginId: String!, password: String!, profilePhoto: String!): CreateOrganizationResponse!
+  OrganizationSignIn(loginId: String!, password: String!): OrganizationSignInResponse!
+  RemoveOrganization: RemoveOrganizationResponse!
+  UpdateOrganization(name: String, password: String): UpdateOrganizationResponse!
+  CreateSlot(startTime: String!, endTime: String!, day: Int!, timetableId: Int!, personalCode: String!, organizationId: Int!): CreateSlotResponse!
+  RemoveSlot(slotId: Int!): RemoveSlotResponse!
+  UpdateSlot(slotId: Int!, startTime: String, endTime: String, userId: Int, day: Int): UpdateSlotResponse!
+  ConfirmTimeTable(timetableId: Int!): ConfirmTimeTableResponse!
+  CreateTimeTable(yearMonthWeek: String!): CreateTimeTableResponse!
+  CreateUserToOrganization(personalCode: String!, name: String!, phoneNumber: String!): CreateUserToOrganizationResponse!
+  RemoveUserFromOrganization(userId: Int!): RemoveUserFromOrganizationResponse!
+  UpdateUser(userId: Int!, personalCode: String, name: String, phoneNumber: String): UpdateUserResponse!
 }
 
 type GetOrganizationProfileResponse {
@@ -48,10 +25,23 @@ type GetOrganizationProfileResponse {
   organization: Organization
 }
 
+type Query {
+  GetOrganizationProfile: GetOrganizationProfileResponse!
+  GetSlots(timetableId: Int!): GetSlotsResponse!
+  GetCurrentTimeTable(yearMonthWeek: String!, organizationId: Int!): GetCurrentTimeTableResponse!
+  GetTimeTables: GetTimeTablesResponse!
+  GetUsers: GetUsersResponse!
+}
+
 type OrganizationSignInResponse {
   ok: Boolean!
   error: String
   token: String
+}
+
+type RemoveOrganizationResponse {
+  ok: Boolean!
+  error: String
 }
 
 type Organization {
@@ -59,10 +49,16 @@ type Organization {
   name: String!
   loginId: String!
   password: String!
+  profilePhoto: String!
   users: [User]
   timetables: [TimeTable]
   createdAt: String!
   updatedAt: String
+}
+
+type UpdateOrganizationResponse {
+  ok: Boolean!
+  error: String
 }
 
 type CreateSlotResponse {
@@ -76,21 +72,43 @@ type GetSlotsResponse {
   slots: [Slot]
 }
 
+type RemoveSlotResponse {
+  ok: Boolean!
+  error: String
+}
+
 type Slot {
   id: Int!
+  timetableId: Int
+  timetable: TimeTable!
   startTime: String!
   endTime: String!
   userId: Int
   user: User!
-  dayId: Int
-  day: Day!
+  day: Int!
   createdAt: String!
   updatedAt: String
+}
+
+type UpdateSlotResponse {
+  ok: Boolean!
+  error: String
+}
+
+type ConfirmTimeTableResponse {
+  ok: Boolean!
+  error: String
 }
 
 type CreateTimeTableResponse {
   ok: Boolean!
   error: String
+}
+
+type GetCurrentTimeTableResponse {
+  ok: Boolean!
+  error: String
+  timetable: TimeTable
 }
 
 type GetTimeTablesResponse {
@@ -101,10 +119,11 @@ type GetTimeTablesResponse {
 
 type TimeTable {
   id: Int!
+  isConfirmed: Boolean!
   yearMonthWeek: String!
   organizationId: Int
   organization: Organization!
-  days: [Day]
+  slots: [Slot]
   createdAt: String!
   updatedAt: String
 }
@@ -135,4 +154,9 @@ type User {
   slots: [Slot]
   createdAt: String!
   updatedAt: String
+}
+
+type UpdateUserResponse {
+  ok: Boolean!
+  error: String
 }

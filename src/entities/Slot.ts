@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm"
-import Day from "./Day"
+import TimeTable from "./TimeTable"
 import User from "./User"
 
 @Entity()
@@ -22,19 +22,23 @@ class Slot extends BaseEntity {
   endTime: string
 
   @Column({ type: "int" })
-  needs: number
+  day: number
 
   @Column({ nullable: true })
   userId: number
 
-  @ManyToOne(type => User, user => user.slots, { onDelete: "CASCADE" })
+  @ManyToOne(type => User, user => user.slots, {
+    onDelete: "CASCADE"
+  })
   user: User
 
   @Column({ nullable: true })
-  dayId: number
+  timetableId: number
 
-  @ManyToOne(type => Day, day => day.slots, { onDelete: "CASCADE" })
-  day: Day
+  @ManyToOne(type => TimeTable, timetable => timetable.slots, {
+    onDelete: "CASCADE"
+  })
+  timetable: TimeTable
 
   @CreateDateColumn() createdAt: string
 

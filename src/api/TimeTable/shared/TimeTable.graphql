@@ -1,9 +1,10 @@
 type TimeTable {
   id: Int!
+  isConfirmed: Boolean!
   yearMonthWeek: String!
   organizationId: Int
   organization: Organization!
-  days: [Day]
+  slots: [Slot]
   createdAt: String!
   updatedAt: String
 }

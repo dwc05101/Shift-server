@@ -1,9 +1,0 @@
-type Day {
-  id: Int!
-  dayNumber: Int!
-  timetableId: Int
-  timetable: TimeTable!
-  slots: [Slot]
-  createdAt: String!
-  updatedAt: String
-}

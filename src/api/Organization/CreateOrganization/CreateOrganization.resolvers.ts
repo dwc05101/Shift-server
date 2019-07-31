@@ -4,6 +4,7 @@ import {
   CreateOrganizationResponse
 } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
+import createJWT from "../../../utils/createJWT"
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -13,17 +14,30 @@ const resolvers: Resolvers = {
       { req }
     ): Promise<CreateOrganizationResponse> => {
       try {
-        await Organization.create({
-          ...args
-        }).save()
-        return {
-          ok: true,
-          error: null
+        const existingOrganization = await Organization.findOne({
+          loginId: args.loginId
+        })
+        if (!existingOrganization) {
+          const organization = await Organization.create({
+            ...args
+          }).save()
+          return {
+            ok: true,
+            error: null,
+            token: createJWT(organization.id)
+          }
+        } else {
+          return {
+            ok: false,
+            error: "ID already in use",
+            token: null
+          }
         }
       } catch (err) {
         return {
           ok: false,
-          error: err.message
+          error: err.message,
+          token: null
         }
       }
     }

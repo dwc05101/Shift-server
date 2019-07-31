@@ -5,5 +5,5 @@ type GetSlotsResponse {
 }
 
 type Query {
-  GetSlots(dayId: Int!): GetSlotsResponse!
+  GetSlots(timetableId: Int!): GetSlotsResponse!
 }

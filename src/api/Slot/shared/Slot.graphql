@@ -1,11 +1,12 @@
 type Slot {
   id: Int!
+  timetableId: Int
+  timetable: TimeTable!
   startTime: String!
   endTime: String!
   userId: Int
   user: User!
-  dayId: Int
-  day: Day!
+  day: Int!
   createdAt: String!
   updatedAt: String
 }
