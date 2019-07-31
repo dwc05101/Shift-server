@@ -5,5 +5,5 @@ type GetDaysResponse {
 }
 
 type Query {
-  GetDays(weekId: Int!): GetDaysResponse!
+  GetDays(timetableId: Int!): GetDaysResponse!
 }

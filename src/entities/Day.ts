@@ -9,7 +9,7 @@ import {
   UpdateDateColumn
 } from "typeorm"
 import Slot from "./Slot"
-import Week from "./Week"
+import TimeTable from "./TimeTable"
 
 @Entity()
 class Day extends BaseEntity {
@@ -20,10 +20,10 @@ class Day extends BaseEntity {
   dayNumber: number
 
   @Column({ nullable: true })
-  weekId: number
+  timetableId: number
 
-  @ManyToOne(type => Week, week => week.days)
-  week: Week
+  @ManyToOne(type => TimeTable, timetable => timetable.days)
+  timetable: TimeTable
 
   @OneToMany(type => Slot, slot => slot.day)
   slots: Slot[]

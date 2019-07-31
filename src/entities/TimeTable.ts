@@ -8,8 +8,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm"
+import Day from "./Day"
 import Organization from "./Organization"
-import Week from "./Week"
 
 @Entity()
 class TimeTable extends BaseEntity {
@@ -17,7 +17,7 @@ class TimeTable extends BaseEntity {
   id: number
 
   @Column({ type: "text" })
-  yearMonth: string
+  yearMonthWeek: string
 
   @Column({ nullable: true })
   organizationId: number
@@ -25,8 +25,8 @@ class TimeTable extends BaseEntity {
   @ManyToOne(type => Organization, organization => organization.timetables)
   organization: Organization
 
-  @OneToMany(type => Week, week => week.timetable)
-  weeks: Week[]
+  @OneToMany(type => Day, day => day.timetable)
+  days: Day[]
 
   @CreateDateColumn() createdAt: string
 

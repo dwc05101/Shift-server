@@ -1,4 +1,4 @@
-export const typeDefs = ["type CreateDayResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Mutation {\n  CreateDay(dayNumber: Int!, weekId: Int!): CreateDayResponse!\n  AcceptInvitation(invitationId: Int!): AcceptInvitationResponse!\n  SendInvitation(invitingOrganizationId: Int!, invitedUserId: Int!): SendInvitationResponse!\n  CreateOrganization(name: String!): CreateOrganizationResponse!\n  RemoveUserFromOrganization(organizationId: Int!, userId: Int!): RemoveUserFromOrganizationResponse!\n  CreateSlot(startTime: String!, endTime: String!, dayId: Int!): CreateSlotResponse!\n  CreateTimeTable(yearMonth: String!, organizationId: Int!): CreateTimeTableResponse!\n  DeleteUser: DeleteUserResponse!\n  EmailSignIn(email: String!, password: String!): EmailSignInResponse!\n  EmailSignUp(firstName: String!, lastName: String!, email: String!, password: String!, profilePhoto: String!, phoneNumber: String!): EmailSignUpResponse!\n  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!\n  CreateWeek(weekNumber: Int!, timetableId: Int!): CreateWeekResponse!\n}\n\ntype GetDaysResponse {\n  ok: Boolean!\n  error: String\n  days: [Day]\n}\n\ntype Query {\n  GetDays(weekId: Int!): GetDaysResponse!\n  GetOrganizationProfile(orgId: Int!): GetOrganizationProfileResponse!\n  GetSlots(dayId: Int!): GetSlotsResponse!\n  GetTimeTables(organizationId: Int!): GetTimeTablesResponse!\n  GetMyProfile: GetMyProfileResponse!\n  GetUsers(organizationId: Int!): GetUsersResponse!\n  GetWeeks(timetableId: Int!): GetWeeksResponse!\n}\n\ntype Day {\n  id: Int!\n  dayNumber: Int!\n  weekId: Int!\n  week: Week!\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype AcceptInvitationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype SendInvitationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Invitation {\n  id: Int!\n  invitingOrganizationId: Int\n  invitingOrganization: Organization!\n  invitedUserId: Int\n  invitedUser: User!\n  accepted: Boolean!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetOrganizationProfileResponse {\n  ok: Boolean!\n  error: String\n  organization: Organization\n}\n\ntype RemoveUserFromOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Organization {\n  id: Int!\n  name: String!\n  adminId: Int\n  admin: User!\n  users: [User]\n  timetables: [TimeTable]\n  invitations: [Invitation]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateSlotResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetSlotsResponse {\n  ok: Boolean!\n  error: String\n  slots: [Slot]\n}\n\ntype Slot {\n  id: Int!\n  startTime: String!\n  endTime: String!\n  userId: Int\n  user: User!\n  dayId: Int\n  day: Day!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateTimeTableResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetTimeTablesResponse {\n  ok: Boolean!\n  error: String\n  timetables: [TimeTable]\n}\n\ntype TimeTable {\n  id: Int!\n  yearMonth: String!\n  organizationId: Int\n  organization: Organization!\n  weeks: [Week]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype DeleteUserResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype EmailSignInResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype EmailSignUpResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype FacebookConnectResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype GetMyProfileResponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype GetUsersResponse {\n  ok: Boolean!\n  error: String\n  users: [User]\n}\n\ntype User {\n  id: Int!\n  email: String\n  password: String\n  firstName: String!\n  lastName: String!\n  phoneNumber: String!\n  profilePhoto: String\n  fbId: String\n  organizationsAsAdmin: [Organization]\n  organizationsAsUser: [Organization]\n  invitations: [Invitation]\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateWeekResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetWeeksResponse {\n  ok: Boolean!\n  error: String\n  weeks: [Week]\n}\n\ntype Week {\n  id: Int!\n  weekNumber: Int!\n  timetableId: Int\n  timetable: TimeTable!\n  days: [Day]\n  createdAt: String!\n  updatedAt: String\n}\n"];
+export const typeDefs = ["type CreateDayResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Mutation {\n  CreateDay(dayNumber: Int!, timetableId: Int!): CreateDayResponse!\n  CreateOrganization(name: String!, loginId: String!, password: String!): CreateOrganizationResponse!\n  OrganizationSignIn(loginId: String!, password: String!): OrganizationSignInResponse!\n  CreateSlot(startTime: String!, endTime: String!, dayId: Int!, personalCode: String!, organizationId: Int!): CreateSlotResponse!\n  CreateTimeTable(yearMonthWeek: String!): CreateTimeTableResponse!\n  CreateUserToOrganization(personalCode: String!, name: String!, phoneNumber: String!): CreateUserToOrganizationResponse!\n  RemoveUserFromOrganization(userId: Int!): RemoveUserFromOrganizationResponse!\n}\n\ntype GetDaysResponse {\n  ok: Boolean!\n  error: String\n  days: [Day]\n}\n\ntype Query {\n  GetDays(timetableId: Int!): GetDaysResponse!\n  GetOrganizationProfile(orgId: Int!): GetOrganizationProfileResponse!\n  GetSlots(dayId: Int!): GetSlotsResponse!\n  GetTimeTables: GetTimeTablesResponse!\n  GetUsers: GetUsersResponse!\n}\n\ntype Day {\n  id: Int!\n  dayNumber: Int!\n  timetableId: Int\n  timetable: TimeTable!\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetOrganizationProfileResponse {\n  ok: Boolean!\n  error: String\n  organization: Organization\n}\n\ntype OrganizationSignInResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype Organization {\n  id: Int!\n  name: String!\n  loginId: String!\n  password: String!\n  users: [User]\n  timetables: [TimeTable]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateSlotResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetSlotsResponse {\n  ok: Boolean!\n  error: String\n  slots: [Slot]\n}\n\ntype Slot {\n  id: Int!\n  startTime: String!\n  endTime: String!\n  userId: Int\n  user: User!\n  dayId: Int\n  day: Day!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateTimeTableResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetTimeTablesResponse {\n  ok: Boolean!\n  error: String\n  timetables: [TimeTable]\n}\n\ntype TimeTable {\n  id: Int!\n  yearMonthWeek: String!\n  organizationId: Int\n  organization: Organization!\n  days: [Day]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateUserToOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetUsersResponse {\n  ok: Boolean!\n  error: String\n  users: [User]\n}\n\ntype RemoveUserFromOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype User {\n  id: Int!\n  personalCode: String!\n  name: String!\n  phoneNumber: String!\n  organizationId: Int\n  organization: Organization!\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n"];
 /* tslint:disable */
 
 export interface Query {
@@ -6,13 +6,11 @@ export interface Query {
   GetOrganizationProfile: GetOrganizationProfileResponse;
   GetSlots: GetSlotsResponse;
   GetTimeTables: GetTimeTablesResponse;
-  GetMyProfile: GetMyProfileResponse;
   GetUsers: GetUsersResponse;
-  GetWeeks: GetWeeksResponse;
 }
 
 export interface GetDaysQueryArgs {
-  weekId: number;
+  timetableId: number;
 }
 
 export interface GetOrganizationProfileQueryArgs {
@@ -21,18 +19,6 @@ export interface GetOrganizationProfileQueryArgs {
 
 export interface GetSlotsQueryArgs {
   dayId: number;
-}
-
-export interface GetTimeTablesQueryArgs {
-  organizationId: number;
-}
-
-export interface GetUsersQueryArgs {
-  organizationId: number;
-}
-
-export interface GetWeeksQueryArgs {
-  timetableId: number;
 }
 
 export interface GetDaysResponse {
@@ -44,29 +30,19 @@ export interface GetDaysResponse {
 export interface Day {
   id: number;
   dayNumber: number;
-  weekId: number;
-  week: Week;
-  slots: Array<Slot> | null;
-  createdAt: string;
-  updatedAt: string | null;
-}
-
-export interface Week {
-  id: number;
-  weekNumber: number;
   timetableId: number | null;
   timetable: TimeTable;
-  days: Array<Day> | null;
+  slots: Array<Slot> | null;
   createdAt: string;
   updatedAt: string | null;
 }
 
 export interface TimeTable {
   id: number;
-  yearMonth: string;
+  yearMonthWeek: string;
   organizationId: number | null;
   organization: Organization;
-  weeks: Array<Week> | null;
+  days: Array<Day> | null;
   createdAt: string;
   updatedAt: string | null;
 }
@@ -74,39 +50,22 @@ export interface TimeTable {
 export interface Organization {
   id: number;
   name: string;
-  adminId: number | null;
-  admin: User;
+  loginId: string;
+  password: string;
   users: Array<User> | null;
   timetables: Array<TimeTable> | null;
-  invitations: Array<Invitation> | null;
   createdAt: string;
   updatedAt: string | null;
 }
 
 export interface User {
   id: number;
-  email: string | null;
-  password: string | null;
-  firstName: string;
-  lastName: string;
+  personalCode: string;
+  name: string;
   phoneNumber: string;
-  profilePhoto: string | null;
-  fbId: string | null;
-  organizationsAsAdmin: Array<Organization> | null;
-  organizationsAsUser: Array<Organization> | null;
-  invitations: Array<Invitation> | null;
+  organizationId: number | null;
+  organization: Organization;
   slots: Array<Slot> | null;
-  createdAt: string;
-  updatedAt: string | null;
-}
-
-export interface Invitation {
-  id: number;
-  invitingOrganizationId: number | null;
-  invitingOrganization: Organization;
-  invitedUserId: number | null;
-  invitedUser: User;
-  accepted: boolean;
   createdAt: string;
   updatedAt: string | null;
 }
@@ -141,110 +100,61 @@ export interface GetTimeTablesResponse {
   timetables: Array<TimeTable> | null;
 }
 
-export interface GetMyProfileResponse {
-  ok: boolean;
-  error: string | null;
-  user: User | null;
-}
-
 export interface GetUsersResponse {
   ok: boolean;
   error: string | null;
   users: Array<User> | null;
 }
 
-export interface GetWeeksResponse {
-  ok: boolean;
-  error: string | null;
-  weeks: Array<Week> | null;
-}
-
 export interface Mutation {
   CreateDay: CreateDayResponse;
-  AcceptInvitation: AcceptInvitationResponse;
-  SendInvitation: SendInvitationResponse;
   CreateOrganization: CreateOrganizationResponse;
-  RemoveUserFromOrganization: RemoveUserFromOrganizationResponse;
+  OrganizationSignIn: OrganizationSignInResponse;
   CreateSlot: CreateSlotResponse;
   CreateTimeTable: CreateTimeTableResponse;
-  DeleteUser: DeleteUserResponse;
-  EmailSignIn: EmailSignInResponse;
-  EmailSignUp: EmailSignUpResponse;
-  FacebookConnect: FacebookConnectResponse;
-  CreateWeek: CreateWeekResponse;
+  CreateUserToOrganization: CreateUserToOrganizationResponse;
+  RemoveUserFromOrganization: RemoveUserFromOrganizationResponse;
 }
 
 export interface CreateDayMutationArgs {
   dayNumber: number;
-  weekId: number;
-}
-
-export interface AcceptInvitationMutationArgs {
-  invitationId: number;
-}
-
-export interface SendInvitationMutationArgs {
-  invitingOrganizationId: number;
-  invitedUserId: number;
+  timetableId: number;
 }
 
 export interface CreateOrganizationMutationArgs {
   name: string;
+  loginId: string;
+  password: string;
 }
 
-export interface RemoveUserFromOrganizationMutationArgs {
-  organizationId: number;
-  userId: number;
+export interface OrganizationSignInMutationArgs {
+  loginId: string;
+  password: string;
 }
 
 export interface CreateSlotMutationArgs {
   startTime: string;
   endTime: string;
   dayId: number;
-}
-
-export interface CreateTimeTableMutationArgs {
-  yearMonth: string;
+  personalCode: string;
   organizationId: number;
 }
 
-export interface EmailSignInMutationArgs {
-  email: string;
-  password: string;
+export interface CreateTimeTableMutationArgs {
+  yearMonthWeek: string;
 }
 
-export interface EmailSignUpMutationArgs {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  profilePhoto: string;
+export interface CreateUserToOrganizationMutationArgs {
+  personalCode: string;
+  name: string;
   phoneNumber: string;
 }
 
-export interface FacebookConnectMutationArgs {
-  firstName: string;
-  lastName: string;
-  email: string | null;
-  fbId: string;
-}
-
-export interface CreateWeekMutationArgs {
-  weekNumber: number;
-  timetableId: number;
+export interface RemoveUserFromOrganizationMutationArgs {
+  userId: number;
 }
 
 export interface CreateDayResponse {
-  ok: boolean;
-  error: string | null;
-}
-
-export interface AcceptInvitationResponse {
-  ok: boolean;
-  error: string | null;
-}
-
-export interface SendInvitationResponse {
   ok: boolean;
   error: string | null;
 }
@@ -254,9 +164,10 @@ export interface CreateOrganizationResponse {
   error: string | null;
 }
 
-export interface RemoveUserFromOrganizationResponse {
+export interface OrganizationSignInResponse {
   ok: boolean;
   error: string | null;
+  token: string | null;
 }
 
 export interface CreateSlotResponse {
@@ -269,30 +180,12 @@ export interface CreateTimeTableResponse {
   error: string | null;
 }
 
-export interface DeleteUserResponse {
+export interface CreateUserToOrganizationResponse {
   ok: boolean;
   error: string | null;
 }
 
-export interface EmailSignInResponse {
-  ok: boolean;
-  error: string | null;
-  token: string | null;
-}
-
-export interface EmailSignUpResponse {
-  ok: boolean;
-  error: string | null;
-  token: string | null;
-}
-
-export interface FacebookConnectResponse {
-  ok: boolean;
-  error: string | null;
-  token: string | null;
-}
-
-export interface CreateWeekResponse {
+export interface RemoveUserFromOrganizationResponse {
   ok: boolean;
   error: string | null;
 }

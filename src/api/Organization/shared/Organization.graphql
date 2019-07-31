@@ -1,11 +1,10 @@
 type Organization {
   id: Int!
   name: String!
-  adminId: Int
-  admin: User!
+  loginId: String!
+  password: String!
   users: [User]
   timetables: [TimeTable]
-  invitations: [Invitation]
   createdAt: String!
   updatedAt: String
 }

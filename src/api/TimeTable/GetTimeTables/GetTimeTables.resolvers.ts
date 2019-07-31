@@ -1,22 +1,16 @@
 import Organization from "../../../entities/Organization"
-import {
-  GetTimeTablesQueryArgs,
-  GetTimeTablesResponse
-} from "../../../types/graph"
+import { GetTimeTablesResponse } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
 import authResolver from "../../../utils/authMiddleware"
 
 const resolvers: Resolvers = {
   Query: {
     GetTimeTables: authResolver(
-      async (
-        _,
-        args: GetTimeTablesQueryArgs,
-        { req }
-      ): Promise<GetTimeTablesResponse> => {
+      async (_, __, { req }): Promise<GetTimeTablesResponse> => {
+        const user: Organization = req.user
         try {
           const organization = await Organization.findOne(
-            { id: args.organizationId },
+            { id: user.id },
             { relations: ["timetables"] }
           )
           if (organization) {

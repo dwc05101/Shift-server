@@ -1,0 +1,12 @@
+type CreateUserToOrganizationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  CreateUserToOrganization(
+    personalCode: String!
+    name: String!
+    phoneNumber: String!
+  ): CreateUserToOrganizationResponse!
+}

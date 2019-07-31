@@ -5,5 +5,5 @@ type GetUsersResponse {
 }
 
 type Query {
-  GetUsers(organizationId: Int!): GetUsersResponse!
+  GetUsers: GetUsersResponse!
 }

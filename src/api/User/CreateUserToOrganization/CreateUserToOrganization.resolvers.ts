@@ -1,29 +1,31 @@
 import Organization from "../../../entities/Organization"
-import TimeTable from "../../../entities/TimeTable"
+import User from "../../../entities/User"
 import {
-  CreateTimeTableMutationArgs,
-  CreateTimeTableResponse
+  CreateUserToOrganizationMutationArgs,
+  CreateUserToOrganizationResponse
 } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
 import authResolver from "../../../utils/authMiddleware"
 
 const resolvers: Resolvers = {
   Mutation: {
-    CreateTimeTable: authResolver(
+    CreateUserToOrganization: authResolver(
       async (
         _,
-        args: CreateTimeTableMutationArgs,
+        args: CreateUserToOrganizationMutationArgs,
         { req }
-      ): Promise<CreateTimeTableResponse> => {
+      ): Promise<CreateUserToOrganizationResponse> => {
         const user: Organization = req.user
-        const { yearMonthWeek } = args
         try {
-          const existingTimetable = await TimeTable.findOne({
-            yearMonthWeek,
+          const existingUser = await User.findOne({
+            personalCode: args.personalCode,
             organizationId: user.id
           })
-          if (!existingTimetable) {
-            await TimeTable.create({ yearMonthWeek, organization: user }).save()
+          if (!existingUser) {
+            await User.create({
+              ...args,
+              organization: user
+            }).save()
             return {
               ok: true,
               error: null
@@ -31,7 +33,7 @@ const resolvers: Resolvers = {
           } else {
             return {
               ok: false,
-              error: "Timetable already exists"
+              error: "User with given code already exists"
             }
           }
         } catch (err) {

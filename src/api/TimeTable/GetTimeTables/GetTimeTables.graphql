@@ -5,5 +5,5 @@ type GetTimeTablesResponse {
 }
 
 type Query {
-  GetTimeTables(organizationId: Int!): GetTimeTablesResponse!
+  GetTimeTables: GetTimeTablesResponse!
 }

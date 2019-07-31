@@ -1,0 +1,12 @@
+type OrganizationSignInResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type Mutation {
+  OrganizationSignIn(
+    loginId: String!
+    password: String!
+  ): OrganizationSignInResponse!
+}

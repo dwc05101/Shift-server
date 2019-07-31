@@ -4,5 +4,9 @@ type CreateOrganizationResponse {
 }
 
 type Mutation {
-  CreateOrganization(name: String!): CreateOrganizationResponse!
+  CreateOrganization(
+    name: String!
+    loginId: String!
+    password: String!
+  ): CreateOrganizationResponse!
 }

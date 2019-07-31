@@ -1,36 +1,23 @@
 import Organization from "../../../entities/Organization"
-import User from "../../../entities/User"
-import { GetUsersQueryArgs, GetUsersResponse } from "../../../types/graph"
+import { GetUsersResponse } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
 import authResolver from "../../../utils/authMiddleware"
 
 const resolvers: Resolvers = {
   Query: {
     GetUsers: authResolver(
-      async (
-        _,
-        args: GetUsersQueryArgs,
-        { req }
-      ): Promise<GetUsersResponse> => {
-        const user: User = req.user
+      async (_, __, { req }): Promise<GetUsersResponse> => {
+        const user: Organization = req.user
         try {
           const organization = await Organization.findOne(
-            { id: args.organizationId },
+            { id: user.id },
             { relations: ["users"] }
           )
           if (organization) {
-            if (organization.adminId === user.id) {
-              return {
-                ok: true,
-                error: null,
-                users: organization.users
-              }
-            } else {
-              return {
-                ok: false,
-                error: "Only admin can get users",
-                users: null
-              }
+            return {
+              ok: true,
+              error: null,
+              users: organization.users
             }
           } else {
             return {

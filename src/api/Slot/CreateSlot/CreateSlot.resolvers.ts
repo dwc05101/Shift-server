@@ -6,26 +6,28 @@ import {
   CreateSlotResponse
 } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
-import authResolver from "../../../utils/authMiddleware"
 
 const resolvers: Resolvers = {
   Mutation: {
-    CreateSlot: authResolver(
-      async (
-        _,
-        args: CreateSlotMutationArgs,
-        { req }
-      ): Promise<CreateSlotResponse> => {
-        const user: User = req.user
-        const { startTime, endTime, dayId } = args
-        try {
-          const day = await Day.findOne({ id: dayId }, { relations: ["slots"] })
-          if (day) {
+    CreateSlot: async (
+      _,
+      args: CreateSlotMutationArgs,
+      { req }
+    ): Promise<CreateSlotResponse> => {
+      const { startTime, endTime, dayId, personalCode, organizationId } = args
+      try {
+        const day = await Day.findOne({ id: dayId }, { relations: ["slots"] })
+        if (day) {
+          const user = await User.findOne({
+            organizationId,
+            personalCode
+          })
+          if (user) {
             await Slot.create({
               startTime,
               endTime,
-              user,
-              day
+              day,
+              user
             }).save()
             return {
               ok: true,
@@ -34,17 +36,22 @@ const resolvers: Resolvers = {
           } else {
             return {
               ok: false,
-              error: "Day not found"
+              error: "user not found"
             }
           }
-        } catch (err) {
+        } else {
           return {
             ok: false,
-            error: err.message
+            error: "Day not found"
           }
         }
+      } catch (err) {
+        return {
+          ok: false,
+          error: err.message
+        }
       }
-    )
+    }
   }
 }
 

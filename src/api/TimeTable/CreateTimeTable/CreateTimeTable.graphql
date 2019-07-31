@@ -4,8 +4,5 @@ type CreateTimeTableResponse {
 }
 
 type Mutation {
-  CreateTimeTable(
-    yearMonth: String!
-    organizationId: Int!
-  ): CreateTimeTableResponse!
+  CreateTimeTable(yearMonthWeek: String!): CreateTimeTableResponse!
 }

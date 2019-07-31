@@ -4,5 +4,5 @@ type CreateDayResponse {
 }
 
 type Mutation {
-  CreateDay(dayNumber: Int!, weekId: Int!): CreateDayResponse!
+  CreateDay(dayNumber: Int!, timetableId: Int!): CreateDayResponse!
 }

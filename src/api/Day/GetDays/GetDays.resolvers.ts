@@ -1,4 +1,4 @@
-import Week from "../../../entities/Week"
+import TimeTable from "../../../entities/TimeTable"
 import { GetDaysQueryArgs, GetDaysResponse } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
 import authResolver from "../../../utils/authMiddleware"
@@ -8,20 +8,20 @@ const resolvers: Resolvers = {
     GetDays: authResolver(
       async (_, args: GetDaysQueryArgs, { req }): Promise<GetDaysResponse> => {
         try {
-          const week = await Week.findOne(
-            { id: args.weekId },
+          const timetable = await TimeTable.findOne(
+            { id: args.timetableId },
             { relations: ["days"] }
           )
-          if (week) {
+          if (timetable) {
             return {
               ok: true,
               error: null,
-              days: week.days
+              days: timetable.days
             }
           } else {
             return {
               ok: false,
-              error: "Week not found",
+              error: "Timetable not found",
               days: null
             }
           }

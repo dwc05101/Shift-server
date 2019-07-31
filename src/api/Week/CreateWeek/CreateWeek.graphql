@@ -1,8 +1,0 @@
-type CreateWeekResponse {
-  ok: Boolean!
-  error: String
-}
-
-type Mutation {
-  CreateWeek(weekNumber: Int!, timetableId: Int!): CreateWeekResponse!
-}

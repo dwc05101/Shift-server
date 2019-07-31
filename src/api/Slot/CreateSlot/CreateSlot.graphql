@@ -8,5 +8,7 @@ type Mutation {
     startTime: String!
     endTime: String!
     dayId: Int!
+    personalCode: String!
+    organizationId: Int!
   ): CreateSlotResponse!
 }

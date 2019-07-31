@@ -1,35 +1,26 @@
-import Invitation from "../../../entities/Invitation"
 import Organization from "../../../entities/Organization"
 import User from "../../../entities/User"
 import {
-  SendInvitationMutationArgs,
-  SendInvitationResponse
+  RemoveUserFromOrganizationMutationArgs,
+  RemoveUserFromOrganizationResponse
 } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
 import authResolver from "../../../utils/authMiddleware"
 
 const resolvers: Resolvers = {
   Mutation: {
-    SendInvitation: authResolver(
+    RemoveUserFromOrganization: authResolver(
       async (
         _,
-        args: SendInvitationMutationArgs,
+        args: RemoveUserFromOrganizationMutationArgs,
         { req }
-      ): Promise<SendInvitationResponse> => {
-        const user: User = req.user
+      ): Promise<RemoveUserFromOrganizationResponse> => {
+        const user: Organization = req.user
         try {
-          const invitingOrganization = await Organization.findOne(
-            { id: args.invitingOrganizationId },
-            { relations: ["admin"] }
-          )
-          const invitedUser = await User.findOne({ id: args.invitedUserId })
-          if (invitingOrganization && invitedUser) {
-            if (invitingOrganization.admin.id === user.id) {
-              await Invitation.create({
-                invitingOrganization,
-                invitedUser,
-                accepted: false
-              }).save()
+          const targetUser = await User.findOne({ id: args.userId })
+          if (targetUser) {
+            if (targetUser.organizationId === user.id) {
+              targetUser.remove()
               return {
                 ok: true,
                 error: null
@@ -37,7 +28,7 @@ const resolvers: Resolvers = {
             } else {
               return {
                 ok: false,
-                error: "Only admin can send invitation"
+                error: "User is not in the organization"
               }
             }
           } else {
@@ -56,5 +47,4 @@ const resolvers: Resolvers = {
     )
   }
 }
-
 export default resolvers

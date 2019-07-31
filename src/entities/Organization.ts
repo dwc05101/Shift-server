@@ -1,18 +1,19 @@
+import bcrypt from "bcrypt"
 import {
   BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm"
-import Invitation from "./Invitation"
 import TimeTable from "./TimeTable"
 import User from "./User"
+
+const BCRYPT_ROUNDS = 10
 
 @Entity()
 class Organization extends BaseEntity {
@@ -22,29 +23,40 @@ class Organization extends BaseEntity {
   @Column({ type: "text" })
   name: string
 
-  @Column({ nullable: true })
-  adminId: number
+  @Column({ type: "text" })
+  loginId: string
 
-  @ManyToOne(type => User, user => user.organizationsAsAdmin, {
+  @Column({ type: "text" })
+  password: string
+
+  @OneToMany(type => User, user => user.organization, {
     onDelete: "CASCADE"
   })
-  admin: User
-
-  @ManyToMany(type => User, user => user.organizationsAsUser, {
-    onDelete: "CASCADE"
-  })
-  @JoinTable()
   users: User[]
 
   @OneToMany(type => TimeTable, timetable => timetable.organization)
   timetables: TimeTable[]
 
-  @OneToMany(type => Invitation, invitation => invitation.invitingOrganization)
-  invitations: Invitation[]
-
   @CreateDateColumn() createdAt: string
 
   @UpdateDateColumn() updatedAt: string
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async savePassword(): Promise<void> {
+    if (this.password) {
+      const hashedPassword = await this.hashPassword(this.password)
+      this.password = hashedPassword
+    }
+  }
+
+  public comparePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password)
+  }
+
+  private hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, BCRYPT_ROUNDS)
+  }
 }
 
 export default Organization

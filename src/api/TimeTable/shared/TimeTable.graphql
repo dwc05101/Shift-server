@@ -1,9 +1,9 @@
 type TimeTable {
   id: Int!
-  yearMonth: String!
+  yearMonthWeek: String!
   organizationId: Int
   organization: Organization!
-  weeks: [Week]
+  days: [Day]
   createdAt: String!
   updatedAt: String
 }

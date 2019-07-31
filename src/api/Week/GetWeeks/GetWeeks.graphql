@@ -1,9 +1,0 @@
-type GetWeeksResponse {
-  ok: Boolean!
-  error: String
-  weeks: [Week]
-}
-
-type Query {
-  GetWeeks(timetableId: Int!): GetWeeksResponse!
-}

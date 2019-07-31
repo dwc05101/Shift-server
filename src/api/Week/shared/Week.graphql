@@ -1,9 +1,0 @@
-type Week {
-  id: Int!
-  weekNumber: Int!
-  timetableId: Int
-  timetable: TimeTable!
-  days: [Day]
-  createdAt: String!
-  updatedAt: String
-}
