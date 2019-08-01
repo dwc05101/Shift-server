@@ -1,3 +1,4 @@
+import Day from "../../../entities/Day"
 import Slot from "../../../entities/Slot"
 import TimeTable from "../../../entities/TimeTable"
 import User from "../../../entities/User"
@@ -6,6 +7,7 @@ import {
   CreateSlotResponse
 } from "../../../types/graph"
 import { Resolvers } from "../../../types/resolvers"
+import validateSlot from "../../../utils/validateSlot"
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -17,7 +19,7 @@ const resolvers: Resolvers = {
       const {
         startTime,
         endTime,
-        day,
+        dayNumber,
         personalCode,
         organizationId,
         timetableId
@@ -25,7 +27,7 @@ const resolvers: Resolvers = {
       try {
         const timetable = await TimeTable.findOne(
           { id: timetableId },
-          { relations: ["slots"] }
+          { relations: ["days"] }
         )
         if (timetable) {
           if (!timetable.isConfirmed) {
@@ -34,16 +36,38 @@ const resolvers: Resolvers = {
               personalCode
             })
             if (user) {
-              await Slot.create({
-                startTime,
-                endTime,
-                timetable,
-                day,
-                user
-              }).save()
-              return {
-                ok: true,
-                error: null
+              const day = await Day.findOne({ dayNumber, timetableId })
+              if (day) {
+                if (
+                  await validateSlot(
+                    organizationId,
+                    personalCode,
+                    day.id,
+                    startTime,
+                    endTime
+                  )
+                ) {
+                  await Slot.create({
+                    startTime,
+                    endTime,
+                    day,
+                    user
+                  }).save()
+                  return {
+                    ok: true,
+                    error: null
+                  }
+                } else {
+                  return {
+                    ok: false,
+                    error: "Not valid slot"
+                  }
+                }
+              } else {
+                return {
+                  ok: false,
+                  error: "day not found"
+                }
               }
             } else {
               return {

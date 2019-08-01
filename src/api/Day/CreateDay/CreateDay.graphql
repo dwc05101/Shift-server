@@ -1,0 +1,13 @@
+type CreateDayResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  CreateDay(
+    startTime: String!
+    endTime: String!
+    dayNumber: Int!
+    timeTableId: Int!
+  ): CreateDayResponse!
+}

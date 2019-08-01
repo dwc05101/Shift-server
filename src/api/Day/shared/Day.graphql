@@ -1,0 +1,9 @@
+type Day {
+  id: Int!
+  dayNumber: Int!
+  startTime: String!
+  endTime: String!
+  timetableId: Int
+  timetable: TimeTable!
+  slots: [Slot]
+}

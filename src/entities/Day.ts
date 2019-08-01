@@ -4,14 +4,15 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm"
-import Day from "./Day"
-import User from "./User"
+import Slot from "./Slot"
+import TimeTable from "./TimeTable"
 
 @Entity()
-class Slot extends BaseEntity {
+class Day extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
@@ -21,25 +22,25 @@ class Slot extends BaseEntity {
   @Column({ type: "text" })
   endTime: string
 
-  @Column({ nullable: true })
-  userId: number
+  @Column({ type: "int" })
+  dayNumber: number
 
-  @ManyToOne(type => User, user => user.slots, {
+  @OneToMany(type => Slot, slot => slot.day, {
     onDelete: "CASCADE"
   })
-  user: User
+  slots: Slot[]
 
   @Column({ nullable: true })
-  dayId: number
+  timetableId: number
 
-  @ManyToOne(type => Day, day => day.slots, {
+  @ManyToOne(type => TimeTable, timetable => timetable.days, {
     onDelete: "CASCADE"
   })
-  day: Day
+  timetable: TimeTable
 
   @CreateDateColumn() createdAt: string
 
   @UpdateDateColumn() updatedAt: string
 }
 
-export default Slot
+export default Day

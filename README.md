@@ -28,6 +28,11 @@ Used GraphQL, PostgreSQL
 - [x] Get Current Timetable
 - [x] Get Timetables
 
+### Day
+
+- [x] Create Day
+- [x] Get Days
+
 ### Slot
 
 - [x] Create Slot

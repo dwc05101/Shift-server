@@ -7,7 +7,7 @@ type Mutation {
   CreateSlot(
     startTime: String!
     endTime: String!
-    day: Int!
+    dayNumber: Int!
     timetableId: Int!
     personalCode: String!
     organizationId: Int!

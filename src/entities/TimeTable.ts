@@ -8,9 +8,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm"
+import Day from "./Day"
 import Link from "./Link"
 import Organization from "./Organization"
-import Slot from "./Slot"
 
 @Entity()
 class TimeTable extends BaseEntity {
@@ -23,6 +23,12 @@ class TimeTable extends BaseEntity {
   @Column({ type: "text" })
   yearMonthWeek: string
 
+  @Column({ type: "text" })
+  startTime: string
+
+  @Column({ type: "text" })
+  endTime: string
+
   @Column({ nullable: true })
   organizationId: number
 
@@ -31,8 +37,8 @@ class TimeTable extends BaseEntity {
   })
   organization: Organization
 
-  @OneToMany(type => Slot, slot => slot.timetable)
-  slots: Slot[]
+  @OneToMany(type => Day, day => day.timetable)
+  days: Day[]
 
   @OneToMany(type => Link, link => link.timetable)
   links: Link[]

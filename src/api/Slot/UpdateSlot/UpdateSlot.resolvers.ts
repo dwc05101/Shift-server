@@ -20,13 +20,13 @@ const resolvers: Resolvers = {
         const user: Organization = req.user
         const slot = await Slot.findOne(
           { id: args.slotId },
-          { relations: ["timetable"] }
+          { relations: ["day", "day.timetable"] }
         )
         const notNullArgs: any = cleanNullArgs(args)
         delete notNullArgs.slotId
 
         if (slot) {
-          if (!slot.timetable.isConfirmed) {
+          if (!slot.day.timetable.isConfirmed) {
             try {
               if (notNullArgs.userId) {
                 const alternateUser = await User.findOne({

@@ -16,14 +16,19 @@ const resolvers: Resolvers = {
         { req }
       ): Promise<CreateTimeTableResponse> => {
         const user: Organization = req.user
-        const { yearMonthWeek } = args
+        const { yearMonthWeek, startTime, endTime } = args
         try {
           const existingTimetable = await TimeTable.findOne({
             yearMonthWeek,
             organizationId: user.id
           })
           if (!existingTimetable) {
-            await TimeTable.create({ yearMonthWeek, organization: user }).save()
+            await TimeTable.create({
+              yearMonthWeek,
+              startTime,
+              endTime,
+              organization: user
+            }).save()
             return {
               ok: true,
               error: null
