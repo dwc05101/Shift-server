@@ -1,11 +1,10 @@
-type TimeTable {
+type Link {
   id: Int!
-  isConfirmed: Boolean!
-  yearMonthWeek: String!
+  url: String!
   organizationId: Int
   organization: Organization!
-  links: [Link]
-  slots: [Slot]
+  timetableId: Int
+  timetable: TimeTable!
   createdAt: String!
   updatedAt: String
 }

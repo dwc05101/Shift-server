@@ -10,6 +10,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm"
+import Link from "./Link"
 import TimeTable from "./TimeTable"
 import User from "./User"
 
@@ -37,6 +38,9 @@ class Organization extends BaseEntity {
 
   @OneToMany(type => TimeTable, timetable => timetable.organization)
   timetables: TimeTable[]
+
+  @OneToMany(type => Link, link => link.organization)
+  links: Link[]
 
   @CreateDateColumn() createdAt: string
 

@@ -1,10 +1,12 @@
-type CreateOrganizationResponse {
+type CreateLinkResponse {
   ok: Boolean!
   error: String
-  token: String
+  link: Link
 }
 
 type Mutation {
+  CreateLink(timetableId: Int!): CreateLinkResponse!
+  RemoveLink(linkId: Int!): RemoveLinkResponse!
   CreateOrganization(name: String!, loginId: String!, password: String!, profilePhoto: String!): CreateOrganizationResponse!
   OrganizationSignIn(loginId: String!, password: String!): OrganizationSignInResponse!
   RemoveOrganization: RemoveOrganizationResponse!
@@ -19,18 +21,47 @@ type Mutation {
   UpdateUser(userId: Int!, personalCode: String, name: String, phoneNumber: String): UpdateUserResponse!
 }
 
-type GetOrganizationProfileResponse {
+type GetLinkResponse {
   ok: Boolean!
   error: String
-  organization: Organization
+  link: Link
 }
 
 type Query {
+  GetLink(organizationId: Int!, timetableId: Int!): GetLinkResponse!
   GetOrganizationProfile: GetOrganizationProfileResponse!
   GetSlots(timetableId: Int!): GetSlotsResponse!
   GetCurrentTimeTable(yearMonthWeek: String!, organizationId: Int!): GetCurrentTimeTableResponse!
   GetTimeTables: GetTimeTablesResponse!
   GetUsers: GetUsersResponse!
+}
+
+type RemoveLinkResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Link {
+  id: Int!
+  url: String!
+  organizationId: Int
+  organization: Organization!
+  timetableId: Int
+  timetable: TimeTable!
+  createdAt: String!
+  updatedAt: String
+}
+
+type CreateOrganizationResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type GetOrganizationProfileResponse {
+  ok: Boolean!
+  error: String
+  organization: Organization
 }
 
 type OrganizationSignInResponse {
@@ -51,6 +82,7 @@ type Organization {
   password: String!
   profilePhoto: String!
   users: [User]
+  links: [Link]
   timetables: [TimeTable]
   createdAt: String!
   updatedAt: String
@@ -123,6 +155,7 @@ type TimeTable {
   yearMonthWeek: String!
   organizationId: Int
   organization: Organization!
+  links: [Link]
   slots: [Slot]
   createdAt: String!
   updatedAt: String

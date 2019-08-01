@@ -4,42 +4,39 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm"
-import Link from "./Link"
 import Organization from "./Organization"
-import Slot from "./Slot"
+import TimeTable from "./TimeTable"
 
 @Entity()
-class TimeTable extends BaseEntity {
+class Link extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({ type: "boolean", default: false })
-  isConfirmed: boolean
-
   @Column({ type: "text" })
-  yearMonthWeek: string
+  url: string
 
   @Column({ nullable: true })
   organizationId: number
 
-  @ManyToOne(type => Organization, organization => organization.timetables, {
+  @ManyToOne(type => Organization, organization => organization.links, {
     onDelete: "CASCADE"
   })
   organization: Organization
 
-  @OneToMany(type => Slot, slot => slot.timetable)
-  slots: Slot[]
+  @Column({ nullable: true })
+  timetableId: number
 
-  @OneToMany(type => Link, link => link.timetable)
-  links: Link[]
+  @ManyToOne(type => TimeTable, timetable => timetable.links, {
+    onDelete: "CASCADE"
+  })
+  timetable: TimeTable
 
   @CreateDateColumn() createdAt: string
 
   @UpdateDateColumn() updatedAt: string
 }
 
-export default TimeTable
+export default Link

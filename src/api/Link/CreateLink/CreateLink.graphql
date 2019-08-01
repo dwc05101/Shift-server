@@ -1,0 +1,9 @@
+type CreateLinkResponse {
+  ok: Boolean!
+  error: String
+  link: Link
+}
+
+type Mutation {
+  CreateLink(timetableId: Int!): CreateLinkResponse!
+}

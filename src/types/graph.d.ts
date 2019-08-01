@@ -1,12 +1,18 @@
-export const typeDefs = ["type CreateOrganizationResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype Mutation {\n  CreateOrganization(name: String!, loginId: String!, password: String!, profilePhoto: String!): CreateOrganizationResponse!\n  OrganizationSignIn(loginId: String!, password: String!): OrganizationSignInResponse!\n  RemoveOrganization: RemoveOrganizationResponse!\n  UpdateOrganization(name: String, password: String): UpdateOrganizationResponse!\n  CreateSlot(startTime: String!, endTime: String!, day: Int!, timetableId: Int!, personalCode: String!, organizationId: Int!): CreateSlotResponse!\n  RemoveSlot(slotId: Int!): RemoveSlotResponse!\n  UpdateSlot(slotId: Int!, startTime: String, endTime: String, userId: Int, day: Int): UpdateSlotResponse!\n  ConfirmTimeTable(timetableId: Int!): ConfirmTimeTableResponse!\n  CreateTimeTable(yearMonthWeek: String!): CreateTimeTableResponse!\n  CreateUserToOrganization(personalCode: String!, name: String!, phoneNumber: String!): CreateUserToOrganizationResponse!\n  RemoveUserFromOrganization(userId: Int!): RemoveUserFromOrganizationResponse!\n  UpdateUser(userId: Int!, personalCode: String, name: String, phoneNumber: String): UpdateUserResponse!\n}\n\ntype GetOrganizationProfileResponse {\n  ok: Boolean!\n  error: String\n  organization: Organization\n}\n\ntype Query {\n  GetOrganizationProfile: GetOrganizationProfileResponse!\n  GetSlots(timetableId: Int!): GetSlotsResponse!\n  GetCurrentTimeTable(yearMonthWeek: String!, organizationId: Int!): GetCurrentTimeTableResponse!\n  GetTimeTables: GetTimeTablesResponse!\n  GetUsers: GetUsersResponse!\n}\n\ntype OrganizationSignInResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype RemoveOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Organization {\n  id: Int!\n  name: String!\n  loginId: String!\n  password: String!\n  profilePhoto: String!\n  users: [User]\n  timetables: [TimeTable]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype UpdateOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype CreateSlotResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetSlotsResponse {\n  ok: Boolean!\n  error: String\n  slots: [Slot]\n}\n\ntype RemoveSlotResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Slot {\n  id: Int!\n  timetableId: Int\n  timetable: TimeTable!\n  startTime: String!\n  endTime: String!\n  userId: Int\n  user: User!\n  day: Int!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype UpdateSlotResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype ConfirmTimeTableResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype CreateTimeTableResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetCurrentTimeTableResponse {\n  ok: Boolean!\n  error: String\n  timetable: TimeTable\n}\n\ntype GetTimeTablesResponse {\n  ok: Boolean!\n  error: String\n  timetables: [TimeTable]\n}\n\ntype TimeTable {\n  id: Int!\n  isConfirmed: Boolean!\n  yearMonthWeek: String!\n  organizationId: Int\n  organization: Organization!\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateUserToOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetUsersResponse {\n  ok: Boolean!\n  error: String\n  users: [User]\n}\n\ntype RemoveUserFromOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype User {\n  id: Int!\n  personalCode: String!\n  name: String!\n  phoneNumber: String!\n  organizationId: Int\n  organization: Organization!\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype UpdateUserResponse {\n  ok: Boolean!\n  error: String\n}\n"];
+export const typeDefs = ["type CreateLinkResponse {\n  ok: Boolean!\n  error: String\n  link: Link\n}\n\ntype Mutation {\n  CreateLink(timetableId: Int!): CreateLinkResponse!\n  RemoveLink(linkId: Int!): RemoveLinkResponse!\n  CreateOrganization(name: String!, loginId: String!, password: String!, profilePhoto: String!): CreateOrganizationResponse!\n  OrganizationSignIn(loginId: String!, password: String!): OrganizationSignInResponse!\n  RemoveOrganization: RemoveOrganizationResponse!\n  UpdateOrganization(name: String, password: String): UpdateOrganizationResponse!\n  CreateSlot(startTime: String!, endTime: String!, day: Int!, timetableId: Int!, personalCode: String!, organizationId: Int!): CreateSlotResponse!\n  RemoveSlot(slotId: Int!): RemoveSlotResponse!\n  UpdateSlot(slotId: Int!, startTime: String, endTime: String, userId: Int, day: Int): UpdateSlotResponse!\n  ConfirmTimeTable(timetableId: Int!): ConfirmTimeTableResponse!\n  CreateTimeTable(yearMonthWeek: String!): CreateTimeTableResponse!\n  CreateUserToOrganization(personalCode: String!, name: String!, phoneNumber: String!): CreateUserToOrganizationResponse!\n  RemoveUserFromOrganization(userId: Int!): RemoveUserFromOrganizationResponse!\n  UpdateUser(userId: Int!, personalCode: String, name: String, phoneNumber: String): UpdateUserResponse!\n}\n\ntype GetLinkResponse {\n  ok: Boolean!\n  error: String\n  link: Link\n}\n\ntype Query {\n  GetLink(organizationId: Int!, timetableId: Int!): GetLinkResponse!\n  GetOrganizationProfile: GetOrganizationProfileResponse!\n  GetSlots(timetableId: Int!): GetSlotsResponse!\n  GetCurrentTimeTable(yearMonthWeek: String!, organizationId: Int!): GetCurrentTimeTableResponse!\n  GetTimeTables: GetTimeTablesResponse!\n  GetUsers: GetUsersResponse!\n}\n\ntype RemoveLinkResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Link {\n  id: Int!\n  url: String!\n  organizationId: Int\n  organization: Organization!\n  timetableId: Int\n  timetable: TimeTable!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateOrganizationResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype GetOrganizationProfileResponse {\n  ok: Boolean!\n  error: String\n  organization: Organization\n}\n\ntype OrganizationSignInResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype RemoveOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Organization {\n  id: Int!\n  name: String!\n  loginId: String!\n  password: String!\n  profilePhoto: String!\n  users: [User]\n  links: [Link]\n  timetables: [TimeTable]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype UpdateOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype CreateSlotResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetSlotsResponse {\n  ok: Boolean!\n  error: String\n  slots: [Slot]\n}\n\ntype RemoveSlotResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Slot {\n  id: Int!\n  timetableId: Int\n  timetable: TimeTable!\n  startTime: String!\n  endTime: String!\n  userId: Int\n  user: User!\n  day: Int!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype UpdateSlotResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype ConfirmTimeTableResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype CreateTimeTableResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetCurrentTimeTableResponse {\n  ok: Boolean!\n  error: String\n  timetable: TimeTable\n}\n\ntype GetTimeTablesResponse {\n  ok: Boolean!\n  error: String\n  timetables: [TimeTable]\n}\n\ntype TimeTable {\n  id: Int!\n  isConfirmed: Boolean!\n  yearMonthWeek: String!\n  organizationId: Int\n  organization: Organization!\n  links: [Link]\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CreateUserToOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype GetUsersResponse {\n  ok: Boolean!\n  error: String\n  users: [User]\n}\n\ntype RemoveUserFromOrganizationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype User {\n  id: Int!\n  personalCode: String!\n  name: String!\n  phoneNumber: String!\n  organizationId: Int\n  organization: Organization!\n  slots: [Slot]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype UpdateUserResponse {\n  ok: Boolean!\n  error: String\n}\n"];
 /* tslint:disable */
 
 export interface Query {
+  GetLink: GetLinkResponse;
   GetOrganizationProfile: GetOrganizationProfileResponse;
   GetSlots: GetSlotsResponse;
   GetCurrentTimeTable: GetCurrentTimeTableResponse;
   GetTimeTables: GetTimeTablesResponse;
   GetUsers: GetUsersResponse;
+}
+
+export interface GetLinkQueryArgs {
+  organizationId: number;
+  timetableId: number;
 }
 
 export interface GetSlotsQueryArgs {
@@ -18,10 +24,21 @@ export interface GetCurrentTimeTableQueryArgs {
   organizationId: number;
 }
 
-export interface GetOrganizationProfileResponse {
+export interface GetLinkResponse {
   ok: boolean;
   error: string | null;
-  organization: Organization | null;
+  link: Link | null;
+}
+
+export interface Link {
+  id: number;
+  url: string;
+  organizationId: number | null;
+  organization: Organization;
+  timetableId: number | null;
+  timetable: TimeTable;
+  createdAt: string;
+  updatedAt: string | null;
 }
 
 export interface Organization {
@@ -31,6 +48,7 @@ export interface Organization {
   password: string;
   profilePhoto: string;
   users: Array<User> | null;
+  links: Array<Link> | null;
   timetables: Array<TimeTable> | null;
   createdAt: string;
   updatedAt: string | null;
@@ -67,9 +85,16 @@ export interface TimeTable {
   yearMonthWeek: string;
   organizationId: number | null;
   organization: Organization;
+  links: Array<Link> | null;
   slots: Array<Slot> | null;
   createdAt: string;
   updatedAt: string | null;
+}
+
+export interface GetOrganizationProfileResponse {
+  ok: boolean;
+  error: string | null;
+  organization: Organization | null;
 }
 
 export interface GetSlotsResponse {
@@ -97,6 +122,8 @@ export interface GetUsersResponse {
 }
 
 export interface Mutation {
+  CreateLink: CreateLinkResponse;
+  RemoveLink: RemoveLinkResponse;
   CreateOrganization: CreateOrganizationResponse;
   OrganizationSignIn: OrganizationSignInResponse;
   RemoveOrganization: RemoveOrganizationResponse;
@@ -109,6 +136,14 @@ export interface Mutation {
   CreateUserToOrganization: CreateUserToOrganizationResponse;
   RemoveUserFromOrganization: RemoveUserFromOrganizationResponse;
   UpdateUser: UpdateUserResponse;
+}
+
+export interface CreateLinkMutationArgs {
+  timetableId: number;
+}
+
+export interface RemoveLinkMutationArgs {
+  linkId: number;
 }
 
 export interface CreateOrganizationMutationArgs {
@@ -172,6 +207,17 @@ export interface UpdateUserMutationArgs {
   personalCode: string | null;
   name: string | null;
   phoneNumber: string | null;
+}
+
+export interface CreateLinkResponse {
+  ok: boolean;
+  error: string | null;
+  link: Link | null;
+}
+
+export interface RemoveLinkResponse {
+  ok: boolean;
+  error: string | null;
 }
 
 export interface CreateOrganizationResponse {

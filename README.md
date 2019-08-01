@@ -34,3 +34,9 @@ Used GraphQL, PostgreSQL
 - [x] Get Slots
 - [x] Remove Slot
 - [x] Update Slot
+
+### Link
+
+- [x] Create Link
+- [x] Get Link
+- [x] Reomove Link

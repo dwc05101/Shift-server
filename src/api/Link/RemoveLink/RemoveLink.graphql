@@ -1,0 +1,8 @@
+type RemoveLinkResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  RemoveLink(linkId: Int!): RemoveLinkResponse!
+}

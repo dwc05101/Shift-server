@@ -8,6 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^3.0.6",
+    "bitly": "^6.1.0",
     "class-validator": "^0.9.1",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",

@@ -1,0 +1,9 @@
+type GetLinkResponse {
+  ok: Boolean!
+  error: String
+  link: Link
+}
+
+type Query {
+  GetLink(organizationId: Int!, timetableId: Int!): GetLinkResponse!
+}

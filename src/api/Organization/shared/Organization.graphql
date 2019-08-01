@@ -5,6 +5,7 @@ type Organization {
   password: String!
   profilePhoto: String!
   users: [User]
+  links: [Link]
   timetables: [TimeTable]
   createdAt: String!
   updatedAt: String
