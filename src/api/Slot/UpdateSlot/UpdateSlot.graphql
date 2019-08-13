@@ -6,6 +6,7 @@ type UpdateSlotResponse {
 type Mutation {
   UpdateSlot(
     slotId: Int!
+    isFulltime: Boolean
     startTime: String
     endTime: String
     userId: Int

@@ -29,7 +29,7 @@ const resolvers: Resolvers = {
         } else {
           return {
             ok: false,
-            error: "ID already in use",
+            error: "아이디가 이미 사용중 입니다.",
             token: null
           }
         }

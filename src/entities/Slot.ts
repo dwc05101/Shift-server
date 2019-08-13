@@ -15,6 +15,9 @@ class Slot extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
+  @Column({type:"boolean"})
+  isFulltime: boolean
+
   @Column({ type: "text" })
   startTime: string
 

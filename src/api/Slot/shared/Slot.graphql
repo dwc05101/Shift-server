@@ -1,5 +1,6 @@
 type Slot {
   id: Int!
+  isFulltime: Boolean!
   startTime: String!
   endTime: String!
   userId: Int

@@ -11,7 +11,15 @@ const resolvers: Resolvers = {
         try {
           const organization = await Organization.findOne(
             { id: user.id },
-            { relations: ["timetables"] }
+            {
+              relations: [
+                "timetables",
+                "timetables.links",
+                "timetables.days",
+                "timetables.days.slots",
+                "timetables.days.slots.user"
+              ]
+            }
           )
           if (organization) {
             return {

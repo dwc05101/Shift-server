@@ -1,3 +1,4 @@
+import Day from "../../../entities/Day"
 import Organization from "../../../entities/Organization"
 import TimeTable from "../../../entities/TimeTable"
 import {
@@ -16,33 +17,43 @@ const resolvers: Resolvers = {
         { req }
       ): Promise<CreateTimeTableResponse> => {
         const user: Organization = req.user
-        const { yearMonthWeek, startTime, endTime } = args
+        const { yearMonthWeek, days } = args
         try {
           const existingTimetable = await TimeTable.findOne({
             yearMonthWeek,
             organizationId: user.id
           })
           if (!existingTimetable) {
-            await TimeTable.create({
+            const timetable = await TimeTable.create({
               yearMonthWeek,
-              startTime,
-              endTime,
               organization: user
             }).save()
+            for (const day of days) {
+              await Day.create({
+                dayNumber: day.dayNumber,
+                startTime: day.startTime,
+                endTime: day.endTime,
+                isEndTimeNextDay: day.isEndTimeNextDay,
+                timetable
+              }).save()
+            }
             return {
               ok: true,
-              error: null
+              error: null,
+              timetableId: timetable.id
             }
           } else {
             return {
               ok: false,
-              error: "Timetable already exists"
+              error: "Timetable already exists",
+              timetableId: null
             }
           }
         } catch (err) {
           return {
             ok: false,
-            error: err.message
+            error: err.message,
+            timetableId: null
           }
         }
       }

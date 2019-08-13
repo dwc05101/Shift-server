@@ -8,6 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^3.0.6",
+    "bcrypt-nodejs": "^0.0.3",
     "bitly": "^6.1.0",
     "class-validator": "^0.9.1",
     "cors": "^2.8.5",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
+    "@types/bcrypt-nodejs": "^0.0.30",
     "@types/cors": "^2.8.5",
     "@types/helmet": "^0.0.43",
     "@types/jsonwebtoken": "^8.3.2",

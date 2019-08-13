@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt-nodejs"
 import {
   BaseEntity,
   BeforeInsert,
@@ -14,8 +14,6 @@ import Link from "./Link"
 import TimeTable from "./TimeTable"
 import User from "./User"
 
-const BCRYPT_ROUNDS = 10
-
 @Entity()
 class Organization extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -25,13 +23,13 @@ class Organization extends BaseEntity {
   name: string
 
   @Column({ type: "text" })
+  email: string
+
+  @Column({ type: "text" })
   loginId: string
 
   @Column({ type: "text" })
   password: string
-
-  @Column({ type: "text" })
-  profilePhoto: string
 
   @OneToMany(type => User, user => user.organization)
   users: User[]
@@ -55,12 +53,12 @@ class Organization extends BaseEntity {
     }
   }
 
-  public comparePassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password)
+  public comparePassword(password: string): boolean {
+    return bcrypt.compareSync(password, this.password)
   }
 
-  private hashPassword(password: string): Promise<string> {
-    return bcrypt.hash(password, BCRYPT_ROUNDS)
+  private hashPassword(password: string): string {
+    return bcrypt.hashSync(password)
   }
 }
 

@@ -1,3 +1,4 @@
+import Organization from "../../../entities/Organization"
 import TimeTable from "../../../entities/TimeTable"
 import {
   GetCurrentTimeTableQueryArgs,
@@ -9,17 +10,48 @@ const resolvers: Resolvers = {
   Query: {
     GetCurrentTimeTable: async (
       _,
-      args: GetCurrentTimeTableQueryArgs
+      args: GetCurrentTimeTableQueryArgs,
+      { req }
     ): Promise<GetCurrentTimeTableResponse> => {
+      const user: Organization = req.user
       try {
-        const { yearMonthWeek, organizationId } = args
-        const timetable = await TimeTable.findOne(
-          {
-            yearMonthWeek,
-            organizationId
-          },
-          { relations: ["slots"] }
-        )
+        const timetable = args.timetableId
+          ? await TimeTable.findOne(
+              {
+                organizationId: args.organizationId
+                  ? args.organizationId
+                  : user.id,
+                id: args.timetableId
+              },
+              {
+                relations: [
+                  "days",
+                  "days.slots",
+                  "days.slots.user",
+                  "links",
+                  "organization",
+                  "organization.users"
+                ]
+              }
+            )
+          : await TimeTable.findOne(
+              {
+                organizationId: args.organizationId
+                  ? args.organizationId
+                  : user.id,
+                yearMonthWeek: args.yearMonthWeek!
+              },
+              {
+                relations: [
+                  "days",
+                  "days.slots",
+                  "days.slots.user",
+                  "links",
+                  "organization",
+                  "organization.users"
+                ]
+              }
+            )
         if (timetable) {
           return {
             ok: true,
