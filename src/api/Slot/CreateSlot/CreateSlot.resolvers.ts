@@ -16,14 +16,7 @@ const resolvers: Resolvers = {
       args: CreateSlotMutationArgs,
       { req }
     ): Promise<CreateSlotResponse> => {
-      const {
-        startTime,
-        endTime,
-        dayNumber,
-        personalCode,
-        organizationId,
-        timetableId
-      } = args
+      const { slots, personalCode, organizationId, timetableId } = args
       try {
         const timetable = await TimeTable.findOne(
           { id: timetableId },
@@ -36,61 +29,72 @@ const resolvers: Resolvers = {
               personalCode
             })
             if (user) {
-              const day = await Day.findOne({ dayNumber, timetableId })
-              if (day) {
-                if (
-                  await validateSlot(
-                    organizationId,
-                    personalCode,
-                    day.id,
-                    startTime,
-                    endTime
-                  )
-                ) {
-                  await Slot.create({
-                    startTime,
-                    endTime,
-                    day,
-                    user
-                  }).save()
-                  return {
-                    ok: true,
-                    error: null
+              let success = true
+              slots.forEach(async slot => {
+                const day = await Day.findOne({
+                  dayNumber: slot.dayNumber,
+                  timetableId
+                })
+                if (day) {
+                  if (
+                    await validateSlot(
+                      organizationId,
+                      personalCode,
+                      day.id,
+                      slot.startTime,
+                      slot.endTime
+                    )
+                  ) {
+                    await Slot.create({
+                      isFulltime: slot.isFulltime,
+                      startTime: slot.startTime,
+                      endTime: slot.endTime,
+                      day,
+                      user
+                    }).save()
+                    return
+                  } else {
+                    success = false
+                    return
                   }
                 } else {
-                  return {
-                    ok: false,
-                    error: "Not valid slot"
-                  }
+                  success = false
+                  return
+                }
+              })
+              if (success) {
+                return {
+                  ok: true,
+                  error: null
                 }
               } else {
                 return {
                   ok: false,
-                  error: "day not found"
+                  error: "이미 지원한 시간대엔 지원이 불가능합니다."
                 }
               }
             } else {
               return {
                 ok: false,
-                error: "user not found"
+                error: "존재하지 않는 유저입니다."
               }
             }
           } else {
             return {
               ok: false,
-              error: "Cannot create a slot on confirmed timetable"
+              error: "확정된 시간표는 수정이 불가능 합니다."
             }
           }
         } else {
           return {
             ok: false,
-            error: "Timetable not found"
+            error: "존재하지 않는 시간표입니다."
           }
         }
       } catch (err) {
         return {
           ok: false,
-          error: err.message
+          error: `서버 내부 오류 : ${err.message}`
         }
       }
     }

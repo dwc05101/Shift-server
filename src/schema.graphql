@@ -11,7 +11,7 @@ type Mutation {
   OrganizationSignIn(loginId: String!, password: String!): OrganizationSignInResponse!
   RemoveOrganization: RemoveOrganizationResponse!
   UpdateOrganization(name: String, password: String): UpdateOrganizationResponse!
-  CreateSlot(startTime: String!, endTime: String!, dayNumber: Int!, timetableId: Int!, personalCode: String!, organizationId: Int!): CreateSlotResponse!
+  CreateSlot(slots: [SlotInfo]!, timetableId: Int!, personalCode: String!, organizationId: Int!): CreateSlotResponse!
   RemoveSlot(slotId: Int!): RemoveSlotResponse!
   UpdateSlot(slotId: Int!, startTime: String, endTime: String, userId: Int, day: Int): UpdateSlotResponse!
   ConfirmTimeTable(timetableId: Int!): ConfirmTimeTableResponse!
@@ -119,6 +119,13 @@ type UpdateOrganizationResponse {
 type CreateSlotResponse {
   ok: Boolean!
   error: String
+}
+
+input SlotInfo {
+  isFulltime: Boolean!
+  startTime: String!
+  endTime: String!
+  dayNumber: Int!
 }
 
 type GetSlotsResponse {
