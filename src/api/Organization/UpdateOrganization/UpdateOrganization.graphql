@@ -7,6 +7,5 @@ type Mutation {
   UpdateOrganization(
     name: String
     password: String
-    email: String
   ): UpdateOrganizationResponse!
 }

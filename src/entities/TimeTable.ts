@@ -23,6 +23,12 @@ class TimeTable extends BaseEntity {
   @Column({ type: "text" })
   yearMonthWeek: string
 
+  @Column({ type: "text" })
+  startTime: string
+
+  @Column({ type: "text" })
+  endTime: string
+
   @Column({ nullable: true })
   organizationId: number
 
@@ -37,9 +43,9 @@ class TimeTable extends BaseEntity {
   @OneToMany(type => Link, link => link.timetable)
   links: Link[]
 
-  @CreateDateColumn({ type: "timestamp" }) createdAt: string
+  @CreateDateColumn() createdAt: string
 
-  @UpdateDateColumn({ type: "timestamp" }) updatedAt: string
+  @UpdateDateColumn() updatedAt: string
 }
 
 export default TimeTable

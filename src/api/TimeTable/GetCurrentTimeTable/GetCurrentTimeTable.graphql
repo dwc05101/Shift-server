@@ -6,8 +6,7 @@ type GetCurrentTimeTableResponse {
 
 type Query {
   GetCurrentTimeTable(
-    yearMonthWeek: String
-    timetableId: Int
-    organizationId: Int
+    yearMonthWeek: String!
+    organizationId: Int!
   ): GetCurrentTimeTableResponse!
 }

@@ -8,7 +8,7 @@ type Mutation {
   CreateOrganization(
     name: String!
     loginId: String!
-    email: String!
     password: String!
+    profilePhoto: String!
   ): CreateOrganizationResponse!
 }

@@ -2,6 +2,8 @@ type TimeTable {
   id: Int!
   isConfirmed: Boolean!
   yearMonthWeek: String!
+  startTime: String!
+  endTime: String!
   organizationId: Int
   organization: Organization!
   links: [Link]

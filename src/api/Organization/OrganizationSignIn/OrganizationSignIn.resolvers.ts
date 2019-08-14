@@ -29,13 +29,13 @@ const resolvers: Resolvers = {
           }
           return {
             ok: false,
-            error: "아이디와 비밀번호를 확인해주세요.",
+            error: "Please check your ID / Password",
             token: null
           }
         } else {
           return {
             ok: false,
-            error: "아이디와 비밀번호를 확인해주세요.",
+            error: "Please check your ID / Password",
             token: null
           }
         }

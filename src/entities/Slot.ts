@@ -15,9 +15,12 @@ class Slot extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
+<<<<<<< HEAD
   @Column({ type: "boolean" })
   isFulltime: boolean
 
+=======
+>>>>>>> parent of 4b6aa35... :sparkles: Edited data schema
   @Column({ type: "text" })
   startTime: string
 

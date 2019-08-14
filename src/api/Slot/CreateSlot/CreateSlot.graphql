@@ -3,18 +3,13 @@ type CreateSlotResponse {
   error: String
 }
 
-input SlotInfo {
-  isFulltime: Boolean!
-  dayNumber: Int!
-  startTime: String!
-  endTime: String!
-}
-
 type Mutation {
   CreateSlot(
-    slots: [SlotInfo]!
-    personalCode: String!
+    startTime: String!
+    endTime: String!
+    dayNumber: Int!
     timetableId: Int!
+    personalCode: String!
     organizationId: Int!
   ): CreateSlotResponse!
 }
