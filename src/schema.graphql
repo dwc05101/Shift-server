@@ -7,15 +7,15 @@ type Mutation {
   CreateDay(startTime: String!, endTime: String!, dayNumber: Int!, timeTableId: Int!): CreateDayResponse!
   CreateLink(timetableId: Int!): CreateLinkResponse!
   RemoveLink(linkId: Int!): RemoveLinkResponse!
-  CreateOrganization(name: String!, loginId: String!, password: String!, profilePhoto: String!): CreateOrganizationResponse!
+  CreateOrganization(name: String!, loginId: String!, email: String!, password: String!): CreateOrganizationResponse!
   OrganizationSignIn(loginId: String!, password: String!): OrganizationSignInResponse!
   RemoveOrganization: RemoveOrganizationResponse!
-  UpdateOrganization(name: String, password: String): UpdateOrganizationResponse!
-  CreateSlot(slots: [SlotInfo]!, timetableId: Int!, personalCode: String!, organizationId: Int!): CreateSlotResponse!
+  UpdateOrganization(name: String, password: String, email: String): UpdateOrganizationResponse!
+  CreateSlot(slots: [SlotInfo]!, personalCode: String!, timetableId: Int!, organizationId: Int!): CreateSlotResponse!
   RemoveSlot(slotId: Int!): RemoveSlotResponse!
-  UpdateSlot(slotId: Int!, startTime: String, endTime: String, userId: Int, day: Int): UpdateSlotResponse!
+  UpdateSlot(slotId: Int!, isFulltime: Boolean, startTime: String, endTime: String, userId: Int, day: Int): UpdateSlotResponse!
   ConfirmTimeTable(timetableId: Int!): ConfirmTimeTableResponse!
-  CreateTimeTable(yearMonthWeek: String!, startTime: String!, endTime: String!): CreateTimeTableResponse!
+  CreateTimeTable(yearMonthWeek: String!, days: [TimeTableDay]!): CreateTimeTableResponse!
   CreateUserToOrganization(personalCode: String!, name: String!, phoneNumber: String!): CreateUserToOrganizationResponse!
   RemoveUserFromOrganization(userId: Int!): RemoveUserFromOrganizationResponse!
   UpdateUser(userId: Int!, personalCode: String, name: String, phoneNumber: String): UpdateUserResponse!
@@ -32,7 +32,7 @@ type Query {
   GetLink(organizationId: Int!, timetableId: Int!): GetLinkResponse!
   GetOrganizationProfile: GetOrganizationProfileResponse!
   GetSlots(dayId: Int!): GetSlotsResponse!
-  GetCurrentTimeTable(yearMonthWeek: String!, organizationId: Int!): GetCurrentTimeTableResponse!
+  GetCurrentTimeTable(yearMonthWeek: String, timetableId: Int, organizationId: Int): GetCurrentTimeTableResponse!
   GetTimeTables: GetTimeTablesResponse!
   GetUsers: GetUsersResponse!
 }
@@ -42,6 +42,7 @@ type Day {
   dayNumber: Int!
   startTime: String!
   endTime: String!
+  isEndTimeNextDay: Boolean!
   timetableId: Int
   timetable: TimeTable!
   slots: [Slot]
@@ -102,8 +103,8 @@ type Organization {
   id: Int!
   name: String!
   loginId: String!
+  email: String!
   password: String!
-  profilePhoto: String!
   users: [User]
   links: [Link]
   timetables: [TimeTable]
@@ -123,9 +124,9 @@ type CreateSlotResponse {
 
 input SlotInfo {
   isFulltime: Boolean!
+  dayNumber: Int!
   startTime: String!
   endTime: String!
-  dayNumber: Int!
 }
 
 type GetSlotsResponse {
@@ -141,6 +142,7 @@ type RemoveSlotResponse {
 
 type Slot {
   id: Int!
+  isFulltime: Boolean!
   startTime: String!
   endTime: String!
   userId: Int
@@ -164,6 +166,14 @@ type ConfirmTimeTableResponse {
 type CreateTimeTableResponse {
   ok: Boolean!
   error: String
+  timetableId: Int
+}
+
+input TimeTableDay {
+  dayNumber: Int!
+  startTime: String!
+  endTime: String!
+  isEndTimeNextDay: Boolean!
 }
 
 type GetCurrentTimeTableResponse {
@@ -182,8 +192,6 @@ type TimeTable {
   id: Int!
   isConfirmed: Boolean!
   yearMonthWeek: String!
-  startTime: String!
-  endTime: String!
   organizationId: Int
   organization: Organization!
   links: [Link]

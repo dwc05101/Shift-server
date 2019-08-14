@@ -3,6 +3,7 @@ type Day {
   dayNumber: Int!
   startTime: String!
   endTime: String!
+  isEndTimeNextDay: Boolean!
   timetableId: Int
   timetable: TimeTable!
   slots: [Slot]

@@ -2,8 +2,8 @@ type Organization {
   id: Int!
   name: String!
   loginId: String!
+  email: String!
   password: String!
-  profilePhoto: String!
   users: [User]
   links: [Link]
   timetables: [TimeTable]

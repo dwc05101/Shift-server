@@ -1,12 +1,19 @@
 type CreateTimeTableResponse {
   ok: Boolean!
   error: String
+  timetableId: Int
+}
+
+input TimeTableDay {
+  dayNumber: Int!
+  startTime: String!
+  endTime: String!
+  isEndTimeNextDay: Boolean!
 }
 
 type Mutation {
   CreateTimeTable(
     yearMonthWeek: String!
-    startTime: String!
-    endTime: String!
+    days: [TimeTableDay]!
   ): CreateTimeTableResponse!
 }
