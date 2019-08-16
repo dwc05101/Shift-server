@@ -7,4 +7,6 @@ type Day {
   timetableId: Int
   timetable: TimeTable!
   slots: [Slot]
+  createdAt: String!
+  updatedAt: String
 }

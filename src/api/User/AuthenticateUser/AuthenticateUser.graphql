@@ -1,0 +1,12 @@
+type AuthenticateUserResponse {
+  ok: Boolean!
+  error: String
+  user: User
+}
+
+type Mutation {
+  AuthenticateUser(
+    personalCode: String!
+    organizationId: Int!
+  ): AuthenticateUserResponse!
+}

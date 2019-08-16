@@ -4,5 +4,5 @@ type RemoveUserFromOrganizationResponse {
 }
 
 type Mutation {
-  RemoveUserFromOrganization(userId: Int!): RemoveUserFromOrganizationResponse!
+  RemoveUserFromOrganization(users: [Int]!): RemoveUserFromOrganizationResponse!
 }

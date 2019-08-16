@@ -10,7 +10,9 @@ const resolvers: Resolvers = {
         try {
           const timetable = await TimeTable.findOne(
             { id: args.timetableId },
-            { relations: ["days", "days.slots", "days.slots.user"] }
+            {
+              relations: ["days", "days.slots", "days.slots.user"]
+            }
           )
           if (timetable) {
             return {

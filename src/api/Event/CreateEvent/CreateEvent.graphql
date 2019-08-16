@@ -1,0 +1,8 @@
+type CreateEventResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  CreateEvent(name: String!, dayId: Int!): CreateEventResponse!
+}

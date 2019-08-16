@@ -15,7 +15,7 @@ class Slot extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({type:"boolean"})
+  @Column({ type: "boolean" })
   isFulltime: boolean
 
   @Column({ type: "text" })
@@ -26,6 +26,12 @@ class Slot extends BaseEntity {
 
   @Column({ nullable: true })
   userId: number
+
+  @Column({ type: "boolean", default: false })
+  isEndTimeNextDay: boolean
+
+  @Column({ type: "boolean", default: false })
+  isStartTimeNextDay: boolean
 
   @ManyToOne(type => User, user => user.slots, {
     onDelete: "CASCADE"

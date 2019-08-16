@@ -1,0 +1,9 @@
+type Event {
+  id: Int!
+  name: String!
+  dayNumber: Int!
+  calendarId: Int
+  calendar: Calendar!
+  createdAt: String!
+  updatedAt: String
+}

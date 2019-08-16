@@ -8,6 +8,8 @@ type Mutation {
     slotId: Int!
     isFulltime: Boolean
     startTime: String
+    isEndTimeNextDay: Boolean
+    isStartTimeNextDay: Boolean
     endTime: String
     userId: Int
     day: Int

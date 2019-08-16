@@ -17,24 +17,28 @@ const resolvers: Resolvers = {
       ): Promise<RemoveUserFromOrganizationResponse> => {
         const user: Organization = req.user
         try {
-          const targetUser = await User.findOne({ id: args.userId })
-          if (targetUser) {
-            if (targetUser.organizationId === user.id) {
-              targetUser.remove()
-              return {
-                ok: true,
-                error: null
-              }
+          let success = true
+          await args.users.forEach(async userId => {
+            const targetUser = await User.findOne({
+              id: userId,
+              organizationId: user.id
+            })
+            if (targetUser) {
+              await targetUser.remove()
             } else {
-              return {
-                ok: false,
-                error: "User is not in the organization"
-              }
+              success = false
+            }
+          })
+
+          if (success) {
+            return {
+              ok: true,
+              error: null
             }
           } else {
             return {
               ok: false,
-              error: "Organization / User not found"
+              error: "존재하지 않는 유저가 포함되어 있습니다."
             }
           }
         } catch (err) {

@@ -1,3 +1,4 @@
+import { getRepository, In } from "typeorm"
 import Day from "../../../entities/Day"
 import Slot from "../../../entities/Slot"
 import TimeTable from "../../../entities/TimeTable"
@@ -29,6 +30,18 @@ const resolvers: Resolvers = {
               personalCode
             })
             if (user) {
+              const dayIds: number[] = []
+              await timetable.days.forEach(day => dayIds.push(day.id))
+
+              const existingSlots = await getRepository(Slot).find({
+                userId: user.id,
+                dayId: In(dayIds)
+              })
+
+              await existingSlots.forEach(slot => {
+                slot.remove()
+              })
+
               let success = true
               slots.forEach(async slot => {
                 const day = await Day.findOne({
@@ -49,6 +62,8 @@ const resolvers: Resolvers = {
                       isFulltime: slot.isFulltime,
                       startTime: slot.startTime,
                       endTime: slot.endTime,
+                      isEndTimeNextDay: slot.isEndTimeNextDay,
+                      isStartTimeNextDay: slot.isStartTimeNextDay,
                       day,
                       user
                     }).save()

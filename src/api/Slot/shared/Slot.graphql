@@ -2,7 +2,9 @@ type Slot {
   id: Int!
   isFulltime: Boolean!
   startTime: String!
+  isStartTimeNextDay: Boolean!
   endTime: String!
+  isEndTimeNextDay: Boolean!
   userId: Int
   user: User!
   dayId: Int

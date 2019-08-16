@@ -28,9 +28,7 @@ class Day extends BaseEntity {
   @Column({ type: "boolean" })
   isEndTimeNextDay: boolean
 
-  @OneToMany(type => Slot, slot => slot.day, {
-    onDelete: "CASCADE"
-  })
+  @OneToMany(type => Slot, slot => slot.day)
   slots: Slot[]
 
   @Column({ nullable: true })

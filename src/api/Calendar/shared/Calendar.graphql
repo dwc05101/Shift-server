@@ -1,0 +1,9 @@
+type Calendar {
+  id: Int!
+  month: String!
+  organizationId: Int
+  organization: Organization!
+  events: [Event]
+  createdAt: String!
+  updatedAt: String
+}

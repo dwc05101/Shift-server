@@ -8,6 +8,8 @@ input SlotInfo {
   dayNumber: Int!
   startTime: String!
   endTime: String!
+  isEndTimeNextDay: Boolean!
+  isStartTimeNextDay: Boolean!
 }
 
 type Mutation {
