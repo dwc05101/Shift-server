@@ -2,7 +2,7 @@ import { ConnectionOptions } from "typeorm"
 
 const defualtConnectionOptions: ConnectionOptions = {
   type: "postgres",
-  database: "shift",
+  database: process.env.DB_NAME || "shift",
   synchronize: true,
   logging: true,
   entities: ["entities/**/*.*"],
