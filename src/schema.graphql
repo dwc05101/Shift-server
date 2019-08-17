@@ -153,6 +153,7 @@ type CreateSlotResponse {
 }
 
 input SlotInfo {
+  isSelected: Boolean!
   isFulltime: Boolean!
   dayNumber: Int!
   startTime: String!
@@ -174,6 +175,7 @@ type RemoveSlotResponse {
 
 type Slot {
   id: Int!
+  isSelected: Boolean!
   isFulltime: Boolean!
   startTime: String!
   isStartTimeNextDay: Boolean!

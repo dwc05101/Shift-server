@@ -15,6 +15,9 @@ class Slot extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
+  @Column({ type: "boolean", default: false })
+  isSelected: boolean
+
   @Column({ type: "boolean" })
   isFulltime: boolean
 

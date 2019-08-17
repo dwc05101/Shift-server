@@ -23,6 +23,8 @@ const resolvers: Resolvers = {
           { id: timetableId },
           { relations: ["days"] }
         )
+
+        const isSelected = args.slots[0].isSelected
         if (timetable) {
           if (!timetable.isConfirmed) {
             const user = await User.findOne({
@@ -34,6 +36,7 @@ const resolvers: Resolvers = {
               await timetable.days.forEach(day => dayIds.push(day.id))
 
               const existingSlots = await getRepository(Slot).find({
+                isSelected,
                 userId: user.id,
                 dayId: In(dayIds)
               })
@@ -59,6 +62,7 @@ const resolvers: Resolvers = {
                     )
                   ) {
                     await Slot.create({
+                      isSelected: slot.isSelected,
                       isFulltime: slot.isFulltime,
                       startTime: slot.startTime,
                       endTime: slot.endTime,

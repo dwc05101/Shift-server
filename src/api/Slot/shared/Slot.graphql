@@ -1,5 +1,6 @@
 type Slot {
   id: Int!
+  isSelected: Boolean!
   isFulltime: Boolean!
   startTime: String!
   isStartTimeNextDay: Boolean!

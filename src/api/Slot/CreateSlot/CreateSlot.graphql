@@ -4,6 +4,7 @@ type CreateSlotResponse {
 }
 
 input SlotInfo {
+  isSelected: Boolean!
   isFulltime: Boolean!
   dayNumber: Int!
   startTime: String!
